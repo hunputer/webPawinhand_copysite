@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+    
+<mapper namespace="com.ph4.s1.cart.CartDAO">
+
+
+<select id="getCartList" resultType="CartListDTO">
+	select N.*, sf.filename from 
+	(select c.*, p.name, p.price, p.color, p.weight, p.product_num as pnum
+	from cart c left join product p
+	on p.product_num = c.product_num) N 
+	FULL OUTER join storefile sf
+	on sf.product_num = N.pnum
+	where N.id = #{id}
+</select>
+
+<insert id="setCartInsert" parameterType="CartVO" >
+	<selectKey keyProperty="cartNum" resultType="Long" order="BEFORE">
+		select cart_seq.nextval from dual
+	</selectKey>
+	insert into cart values(#{id}, #{cartNum}, #{product_num}, #{amount}, #{totalPrice})
+</insert>
+
+<select id="getCartCount" resultType="int">
+	select count(*) form cart
+	where id = #{id} and product_num= #{product_num}
+</select>
+
+<update id="setCartUpdate" parameterType="CartVO">
+	update cart set amount = #{amount}, totalPrice = #{totalPrice} where cartNum = #{cartNum}
+</update>
+
+<delete id="setCartDelete" parameterType="CartVO">
+	delete cart where cartNum = #{cartNum}
+</delete>
+
+</mapper>

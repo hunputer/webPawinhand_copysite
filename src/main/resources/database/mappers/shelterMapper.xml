@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+   <mapper namespace="com.ph4.s1.board.shelter.ShelterDAO">   
+   
+   		 <resultMap type="ShelterDTO" id="getFileList">
+         <result column="num" property="num"/>
+         <result column="regDate" property="regDate"/>
+         <result column="hit" property="hit"/>
+         <result column="animal" property="animal"/>
+         <result column="animal_kind" property="animal_kind"/>
+         <result column="sex" property="sex"/>
+         <result column="neuter" property="neuter"/>
+         <result column="color" property="color"/>
+         <result column="birth" property="birth"/>
+         <result column="kg" property="kg"/>
+         <result column="period_1" property="period_1"/>
+         <result column="period_2" property="period_2"/>
+         <result column="place_of_find" property="place_of_find"/>         
+         <result column="special" property="special"/>
+         <result column="center" property="center"/>
+         <result column="center_tel" property="center_tel"/>
+         <association property="shelterFileDTO" javaType="ShelterFileDTO" resultMap="ShelterFile">
+		</association>
+	</resultMap>
+	
+	<resultMap type="ShelterFileDTO" id="ShelterFile">
+			<id column="fileNum" property="fileNum"></id>
+			<result column="num" property="num"/>
+			<result column="filename" property="fileName"/>
+			<result column="oriname" property="oriName"/>
+	</resultMap>
+   
+   
+   
+      <select id="getList" parameterType="Pager" resultMap="getFileList">
+          select * from
+         (select rownum as R, SS.* from
+            (select sf.* from 
+			(select s.* , f.fileName
+			from shelter s
+			left outer join (select num, max(fileName) as fileName from shelterfile group by num) f on s.num = f.num) sf
+		
+		where
+		<choose>
+			<when test="kind == 'animal'">
+				animal
+			</when>
+
+			<otherwise>
+				place_of_find
+			</otherwise>
+		</choose>
+		like '%'||#{search}||'%' order by num desc) SS)
+		where R between
+		#{startRow} and #{lastRow}
+      </select>
+      
+      <select id="getCount" resultType="Long" parameterType="Pager">
+         select count(num) from shelter
+      </select>
+      
+      <select id="getNum" resultType="Long">
+         select shelter_seq.nextval from dual
+      </select>
+      
+      <insert id="setInsert" parameterType="ShelterDTO">
+         <selectKey keyProperty="num" resultType="Long" order="BEFORE">
+            select shelter_seq.nextval from dual
+         </selectKey>
+         insert into shelter values
+         (#{num}, sysdate, 0,
+         #{animal}, #{animal_kind}, #{sex}, #{neuter}, #{color}, #{birth}, #{kg},
+         #{period_1}, #{period_2}, #{place_of_find}, #{special}, #{center}, #{center_tel}
+         )
+      </insert>
+      
+
+      <select id="getOne" parameterType="ShelterDTO" resultType="ShelterDTO" resultMap="getOneResult">
+         select S.*, SF.* from
+         shelter S left join shelterFile SF
+         on S.num = SF.num
+         where S.num = #{num}   
+      </select>
+      
+      <resultMap type="ShelterDTO" id="getOneResult">
+         <result column="num" property="num"/>
+         <result column="regDate" property="regDate"/>
+         <result column="hit" property="hit"/>
+         <result column="animal" property="animal"/>
+         <result column="animal_kind" property="animal_kind"/>
+         <result column="sex" property="sex"/>
+         <result column="neuter" property="neuter"/>
+         <result column="color" property="color"/>
+         <result column="birth" property="birth"/>
+         <result column="kg" property="kg"/>
+         <result column="period_1" property="period_1"/>
+         <result column="period_2" property="period_2"/>
+         <result column="place_of_find" property="place_of_find"/>         
+         <result column="special" property="special"/>
+         <result column="center" property="center"/>
+         <result column="center_tel" property="center_tel"/>
+         
+      
+         <collection property="shelterFileDTOs" ofType="shelterFileDTO" javaType="java.util.List">
+            <id column="fileNum" property="fileNum"/>
+            <result column="fileName" property="fileName"/>
+            <result column="oriName" property="oriName"/>
+         </collection>
+      </resultMap>
+      
+      <delete id="setDelete" parameterType="ShelterDTO">
+         delete shelter where num=#{num}
+      </delete>
+      
+      <update id="setUpdate" parameterType="ShelterDTO">
+         update shelter set animal=#{animal}, animal_kind=#{animal_kind}, sex=#{sex}, neuter=#{neuter}, 
+         color=#{color}, birth=#{birth}, kg=#{kg}, period_1=#{period_1}, period_2=#{period_2}, 
+         place_of_find=#{place_of_find}, special=#{special}, center=#{center}, center_tel=#{center_tel} 
+         where num=#{num}
+      </update>
+      
+      
+ <!-- ******************** file ******************** -->
+ 
+ 
+ 	  <insert id="setInsertFile" parameterType="ShelterFileDTO">
+         insert into shelterFile values(shelter_seq.nextval, #{num}, #{fileName}, #{oriName}) 
+      </insert>
+      
+      
+      <select id="getFileOne" parameterType="ShelterDTO" resultType="ShelterFileDTO">
+		select * from shelterFile where num = #{num}
+	  </select>
+	  
+   
+   </mapper>    

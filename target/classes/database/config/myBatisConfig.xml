@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  
+  <configuration>
+  	<typeAliases>
+  		<typeAlias type="java.lang.Long" alias="Long"/>
+		<typeAlias type="com.ph4.s1.util.Pager" alias="Pager"/>
+  		<typeAlias type="com.ph4.s1.voluntary.VoluntaryDTO" alias="VoluntaryDTO"/>
+    	<typeAlias type="com.ph4.s1.voluntary.file.VoluntaryFileDTO" alias="VoluntaryFileDTO"/>
+    	<typeAlias type="com.ph4.s1.voluntary.reserve.VoluntaryReserveDTO" alias="VoluntaryReserveDTO"/>
+    	<typeAlias type="com.ph4.s1.board.shelter.ShelterDTO" alias="ShelterDTO"/>
+        <typeAlias type="com.ph4.s1.board.file.ShelterFileDTO" alias="ShelterFileDTO"/>
+        <typeAlias type="com.ph4.s1.lost.LostDTO" alias="LostDTO"/>
+      	<typeAlias type="com.ph4.s1.lostFile.LostFileDTO" alias="LostFileDTO"/>
+      	<typeAlias type="com.ph4.s1.lostReply.LostReplyDTO" alias="LostReplyDTO"/>
+      	<typeAlias type="com.ph4.s1.lostReply.LostReplyPager" alias="LostReplyPager"/>
+      	<typeAlias type="com.ph4.s1.board.BoardDTO" alias="boardDTO"/>
+      	<typeAlias type="com.ph4.s1.board.notice.NoticeDTO" alias="noticeDTO"/>
+      	<typeAlias type="com.ph4.s1.board.qna.QnaDTO" alias="qnaDTO"/>
+      	<typeAlias type="com.ph4.s1.board.boardFile.BoardFileDTO" alias="BoardFileDTO"/>
+      	<!-- 작성 이후 -->
+      	<typeAlias type="com.ph4.s1.store.product.ProductDTO" alias="ProductDTO"/>
+      	<typeAlias type="com.ph4.s1.store.storeFile.StoreFileDTO" alias="StoreFileDTO"/>
+      	<typeAlias type="com.ph4.s1.store.product.review.ProductReviewDTO" alias="ProductReviewDTO"/>
+      	<typeAlias type="com.ph4.s1.store.product.reviewFile.ReviewFileDTO" alias="ReviewFileDTO"/>
+      	<typeAlias type="com.ph4.s1.store.product.review.ReviewPager" alias="ReviewPager"/>
+      	<typeAlias type="com.ph4.s1.store.product.productQna.ProductQnaDTO" alias="ProductQnaDTO"/>
+      	<typeAlias type="com.ph4.s1.store.product.productQnaReply.ProductQnaReplyDTO" alias="ProductQnaReplyDTO"/>
+      	<typeAlias type="com.ph4.s1.store.product.productQna.QnaPager" alias="QnaPager"/>      	
+      	
+      	<typeAlias type="com.ph4.s1.member.MemberDTO" alias="MemberDTO"/>
+	
+      	
+      	<typeAlias type="com.ph4.s1.board.community.CommunityDTO" alias="CommunityDTO"/>
+      	<typeAlias type="com.ph4.s1.communityReply.CommunityReplyDTO" alias="CommunityReplyDTO"/>
+      	<typeAlias type="com.ph4.s1.communityReply.CommunityReplyPager" alias="CommunityReplyPager"/>
+		<typeAlias type="com.ph4.s1.cart.CartVO" alias="CartVO"/>
+		<typeAlias type="com.ph4.s1.cart.CartListDTO" alias="CartListDTO"/>
+		
+      	<typeAlias type="com.ph4.s1.store.pay.OrderListDTO" alias="OrderListDTO"/>
+      	<typeAlias type="com.ph4.s1.store.pay.PayInfoDTO" alias="PayInfoDTO"/>
+      	<typeAlias type="com.ph4.s1.store.product.productDetail.ProductDetailDTO" alias="ProductDetailDTO"/>
+      	<typeAlias type="com.ph4.s1.store.product.ProductPager" alias="ProductPager"/>
+      	
+      	<typeAlias type="com.ph4.s1.store.pay.OrderDetailDTO" alias="OrderDetailDTO"/>
+ 		<typeAlias type="com.ph4.s1.store.pay.DepositInfoDTO" alias="DepositInfoDTO"/>
+
+  	</typeAliases>
+  
+  
+  </configuration>

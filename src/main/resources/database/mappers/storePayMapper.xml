@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ 
+<mapper namespace="com.ph4.s1.store.pay.StorePayDAO">
+ 	
+ 	<!-- 상품은 그냥 상품 id랑 수량으로 가져오기 -->
+   	<select id="getOrderProduct" parameterType="ProductDTO" resultType="ProductDTO">
+   		select * from product where product_num = #{product_num}
+   	</select>
+   	
+   	
+   	<insert id="setOrderList" parameterType="OrderListDTO">
+   		<selectKey keyProperty="order_num" resultType="Long" order="BEFORE">
+   			select od_seq.nextval from dual
+   		</selectKey>
+   		insert into orderList values(#{order_num}, #{orderId},#{toName},#{toAddress},#{toZipcode},#{toPhone},
+   		#{toTel},sysdate ,#{total},#{addComment})
+   	</insert>
+   	
+   	<insert id="setPayInfo" parameterType="PayInfoDTO">
+   		insert into payInfo values(#{order_num},#{id}, #{payMethod},#{totalPrice}, #{isPay}, sysdate, sysdate+3)
+   	</insert>
+   	
+   	<select id="memberOne" parameterType="MemberDTO" resultType="MemberDTO">
+   		select * from member where id=#{id}
+    </select>
+   	
+   	<update id="setPoint" parameterType="MemberDTO">
+   		update member set points = #{points} where id = #{id}
+   	</update>
+ 
+ 	<update id="setProductStock" parameterType="ProductDTO">
+ 		update product set stock=#{stock} where product_num = #{product_num}
+ 	</update>
+ 
+ 	<insert id="setOrderDetail" parameterType="OrderDetailDTO">
+ 		insert into orderDetail values(od_seq.nextval, #{id}, #{order_num},#{product_num},#{name},#{amount},#{ptotal})
+ 	</insert>
+ 	
+ 	<select id="getOrderList" parameterType="OrderListDTO" resultType="OrderListDTO">
+ 		select * from orderList where order_num = #{order_num}
+ 	</select>
+ 	
+ 	<select id="getPayInfo" parameterType="OrderListDTO" resultType="PayInfoDTO">
+ 		select * from payInfo where order_num = #{order_num}
+ 	</select>
+ 	
+ 	<!-- 주문상세에서 필요한 테이블 조인 -->
+	<resultMap type="OrderDetailDTO" id="getOD">
+		<id column="num" property="num"></id>
+		<result column="id" property="id"/>
+		<result column="order_num" property="order_num"/>
+		<result column="product_num" property="product_num"/>
+		<result column="name" property="name"/>
+		<result column="amount" property="amount"/>
+		<result column="ptotal" property="ptotal"/>
+		<association property="productDTO" javaType="ProductDTO" resultMap="Product">
+		</association>
+	</resultMap>
+	
+	<resultMap type="ProductDTO" id="Product">
+			<id column="product_num" property="product_num"></id>
+			<result column="category_num" property="category_num"/>
+			<result column="name" property="name"/>
+			<result column="price" property="price"/>
+			<result column="stock" property="stock"/>
+			<result column="weight" property="weight"/>
+			<result column="color" property="color"/>
+			<result column="descriptions" property="descriptions"/>
+			<result column="regDate" property="regDate"/>
+	</resultMap>
+ 	
+ 	
+ 	<select id="getOrderDetail" parameterType="OrderListDTO" resultMap="getOD">
+ 		select o.*, p.color, p.price, p.weight
+		from orderDetail o
+		inner join product p on o.product_num = p.product_num
+		where order_num = #{order_num}
+ 	</select>
+
+	<insert id="setDepositInfo" parameterType="DepositInfoDTO">
+		insert into depositInfo values (#{order_num}, #{depositName}, #{depositAccount})
+	</insert>
+	
+	<select id="getDepositInfo" parameterType="OrderListDTO" resultType="DepositInfoDTO">
+		select * from depositInfo where order_num=#{order_num}
+	</select>
+</mapper>

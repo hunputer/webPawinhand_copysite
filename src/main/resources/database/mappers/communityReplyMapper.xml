@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.ph4.s1.communityReply.CommunityReplyDAO">
+	
+	<select id="getList" resultType="CommunityReplyDTO" parameterType="CommunityReplyPager">
+		select * from
+		(select rownum R, N.* from 
+		(select * from communityreply 
+		where cmn_num = #{cmn_num}
+		order by ref desc, step asc) N)
+		where R between #{startRow} and #{lastRow}
+	</select>
+	
+	<select id="getCount" resultType="Long" parameterType="CommunityReplyPager">
+		select count(num) from communityreply where cmn_num = #{cmn_num}
+	</select>
+	
+	<update id="setDelete" parameterType="CommunityReplyDTO">
+		update communityreply set contents = '삭제된 메세지 입니다.' where num = #{num}
+	</update>
+	
+	<insert id="setInsert" parameterType="CommunityReplyDTO">
+		<selectKey keyProperty="num" resultType="Long" order="BEFORE">
+   	  	  select cr_seq.nextval from dual
+   	    </selectKey>
+		insert into communityreply values (#{num}, #{cmn_num}, #{writer}, #{contents},sysdate, #{num},0,0)
+	</insert>
+	
+	<select id="getOne" parameterType="CommunityReplyDTO" resultType="CommunityReplyDTO">
+		select * from communityreply where num = #{num}
+	</select>
+	
+	<update id="setReplyUpdate" parameterType="CommunityReplyDTO">
+		update communityreply set step=step+1 where 
+		ref=(select ref from communityreply where num=#{num}) 
+		and step > (select step from communityreply where num=#{num})
+	</update>
+	
+	<insert id="setReply" parameterType="CommunityReplyDTO">
+		insert into communityreply values (cr_seq.nextval
+		, #{cmn_num}, #{writer}, #{contents}, sysdate, 
+		(select ref from communityreply where num=#{num}),
+		(select step+1 from communityreply where num=#{num}), 
+		(select depth+1 from communityreply where num=#{num}))
+	</insert>
+	
+</mapper>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ 
+<mapper namespace="com.ph4.s1.store.product.reviewFile.ReviewFileDAO">
+	<select id="getFile" resultType="ReviewFileDTO" parameterType="ProductReviewDTO">
+		select * from ReviewFile where review_num = #{review_num}
+	</select>
+	
+	<insert id="setInsert" parameterType="ReviewFileDTO">
+		insert into reviewfile values (reviewfile_seq.nextval, #{review_num}, #{fileName}, #{oriName})
+	</insert>
+</mapper>

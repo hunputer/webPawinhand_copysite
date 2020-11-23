@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+    
+<mapper namespace="com.ph4.s1.store.product.productQna.ProductQnaDAO">
+    <select id="getList" resultType="ProductQnaDTO" parameterType="QnaPager">
+    	select * from
+		(select rownum R, N.* from
+		(select * from productqna
+		where product_num = #{product_num}
+		order by qna_num desc) N)
+		where R between #{startRow} and #{lastRow}
+    </select>
+	
+	<select id="getCount" resultType="Long" parameterType="QnaPager">
+		select count(qna_num) from productqna where product_num = #{product_num}
+	</select>
+	
+	<insert id="setInsert" parameterType="ProductQnaDTO">
+		insert into productqna values (productqna_seq.nextval, #{product_num}, #{id}, #{contents}, #{title}, sysdate)
+	</insert>
+	
+	<delete id="setDelete" parameterType="ProductQnaDTO">
+		delete from productqna where qna_num = #{qna_num}
+	</delete>
+
+
+ <!-- ******************** admin ******************** -->	
+	<select id="getList_admin" parameterType="Pager" resultMap="getProductList">
+        select * from
+		(select rownum R, qna.* from
+		(select * from (select PQ.*, P.name, P.color from 
+         productqna PQ left join product P
+         on PQ.product_num = P.product_num) where 
+		<choose>
+			<when test="kind == 'id'">
+				id
+			</when>	
+			
+			<otherwise>
+				name
+			</otherwise>
+		</choose>
+		like '%'||#{search}||'%' order by qna_num desc) qna)
+		where R between #{startRow} and #{lastRow}
+	</select>
+	
+	<resultMap type="ProductQnaDTO" id="getProductList">
+         <result column="qna_num" property="qna_num"/>
+         <result column="product_num" property="product_num"/>
+         <result column="id" property="id"/>
+         <result column="contents" property="contents"/>
+         <result column="title" property="title"/>
+         <result column="regDate" property="regDate"/>
+         <association property="productDTO" javaType="ProductDTO" resultMap="Product">
+		</association>
+	</resultMap>
+	
+	<resultMap type="ProductDTO" id="Product">
+			<id column="product_num" property="product_num"></id>
+			<result column="name" property="name"/>
+			<result column="color" property="color"/>
+	</resultMap>
+	
+	<select id="getCount_admin" parameterType="Pager" resultType="Long">
+		select count(qna_num) from productqna
+	</select>
+	
+	<select id="getOne_admin" parameterType="ProductQnaDTO" resultType="ProductQnaDTO" resultMap="getProductList">
+		select PQ.*, P.name, P.color from 
+        productqna PQ left join product P
+        on PQ.product_num = P.product_num
+        where PQ.qna_num = #{qna_num}
+	</select>
+	
+	
+</mapper>
+    

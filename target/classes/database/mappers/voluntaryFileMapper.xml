@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ph4.s1.voluntary.file.VoluntaryFileDAO">
+
+	<insert id="setInsertFile" parameterType="VoluntaryFileDTO">
+		insert into volBoardFile values(BFD_SEQ.nextval,#{num}, #{fileName}, #{oriName})
+	</insert>
+	
+	<select id="getOne" parameterType="VoluntaryDTO" resultType="VoluntaryFileDTO">
+		select * from volBoardFile where num = #{num}
+	</select>
+
+	<select id="getAll" resultType="VoluntaryFileDTO">
+		select num, max(fileName) from volboardfile group by num
+	</select>
+	
+	<delete id="setFileDel" parameterType="VoluntaryFileDTO">
+		delete volBoardFile where fileNum = #{fileNum}
+	</delete>
+</mapper>    

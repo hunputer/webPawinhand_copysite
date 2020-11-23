@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.ph4.s1.store.storeFile.StoreFileDAO">
+	<select id="getFiles" parameterType="ProductDTO" resultType="StoreFileDTO">
+		select * from storeFile where product_num = #{product_num}
+	</select>
+	
+	<select id="getOne" parameterType="ProductDTO" resultType="StoreFileDTO">
+		select * from (select S.*, rownum as rnum from storeFile S where product_num = #{product_num}) where rnum = 1
+	</select>
+	
+	<insert id="setInsert" parameterType="StoreFileDTO">
+		insert into storeFile values (storeFile_seq.nextval, #{product_num}, #{fileName}, #{oriName})
+	</insert>
+	
+	<delete id="setDelete" parameterType="ProductDTO">
+		delete from storeFile where product_num = #{product_num}
+	</delete>
+</mapper>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ph4.s1.board.community.CommunityDAO">
+
+	
+	
+	<update id="setUpdate" parameterType="CommunityDTO">
+		update community set title=#{title}, type=#{type}, contents=#{contents} where num=#{num}
+	</update>
+
+	<delete id="setDelete" parameterType="CommunityDTO">
+		delete community where num=#{num}
+	</delete>
+	
+	<select id="getNum" resultType="Long">
+		select cm_seq.nextval from dual
+	</select>
+	
+	<insert id="setInsert" parameterType="CommunityDTO">
+		<selectKey keyProperty="num" resultType="Long" order="BEFORE">
+			select cm_seq.nextval from dual
+		</selectKey>
+		insert into community values(#{num}, #{type}, #{title}, #{writer}, #{contents}, sysdate, 0)
+	</insert>
+	
+	<select id="getList" resultType="CommunityDTO" parameterType="Pager">
+		select * from
+		(select rownum R, N.* from 
+		(select * from community where 
+		<choose>
+			<when test="type == 'etc'">
+				type ='기타' and
+			</when>
+			<when test="type == 'dog'">
+				type ='개' and
+			</when>
+			<when test="type =='cat'">
+				type ='고양이' and
+			</when>
+			<otherwise>
+				type is not null and
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="kind == 'tt'">
+				title
+			</when>
+			<when test="kind == 'wr'">
+				writer
+			</when>
+			<otherwise>
+				contents
+			</otherwise>
+		</choose>
+		like '%'||#{search}||'%' order by num desc) N)
+		where R between #{startRow} and #{lastRow}
+	</select>
+	
+	<select id="getOne" parameterType="CommunityDTO" resultType="CommunityDTO">
+		select * from community where num=#{num}	
+	</select>
+	
+	<select id="getCount" resultType="Long" parameterType="Pager">
+		select count(num) from community
+		where 
+		<choose>
+			<when test="type == 'etc'">
+				type = '기타' and
+			</when>
+			<when test="type == 'dog'">
+				type = '개' and
+			</when>
+			<when test="type =='cat'">
+				type = '고양이' and
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="kind == 'tt'">
+				title
+			</when>
+			<when test="kind == 'wr'">
+				writer
+			</when>
+			<otherwise>
+				contents
+			</otherwise>
+		</choose>
+		like '%' || #{search} || '%'
+	</select>
+	
+	<!-- 게시판 조회수 -->
+	<update id="setHit" parameterType="int">
+ 		 update community set hit = hit + 1 where num =#{num}
+	</update>
+	
+</mapper>    

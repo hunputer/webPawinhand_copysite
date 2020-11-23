@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.ph4.s1.store.product.ProductDAO">
+	<select id="getOne" parameterType="ProductDTO" resultType="ProductDTO">
+		select * from product where product_num = #{product_num}
+	</select>
+	
+	<select id="getList" resultType="ProductDTO">
+		select * from product where category_num = #{category_num}
+	</select>
+	
+	<insert id="setInsert" parameterType="ProductDTO">
+		<selectKey keyProperty="product_num" resultType="Long" order="BEFORE">
+   	      	  select product_seq.nextval from dual
+   	    </selectKey>
+		insert into product values (#{product_num}, #{category_num}, #{name}, #{price}, #{stock}, #{weight},#{color},#{descriptions}, sysdate)
+	</insert>
+	
+	<delete id="setDelete" parameterType="ProductDTO">
+		delete from product where product_num = #{product_num}
+	</delete>
+	
+	<update id="setUpdate" parameterType="ProductDTO">
+		update product set category_num = #{category_num}, name = #{name}, price = #{price}, stock = #{stock}, weight = #{weight}, color = #{color}, descriptions = #{descriptions} where product_num = #{product_num}
+	</update>
+	
+	
+	
+	
+	<select id="getList_admin" parameterType="ProductPager" resultType="ProductDTO">
+		select * from 
+		(select rownum R, P.* from 
+		(select * from product where 
+		<choose>
+			<when test="kind == 'category'">
+				category_num
+			</when>	
+			
+			<when test="kind == 'name'">
+				name
+			</when>	
+			
+			<otherwise>
+				color
+			</otherwise>
+		</choose>
+		like '%'||#{search}||'%') P)
+		where R between #{startRow} and #{lastRow}
+	</select>
+	
+	<select id="getCount" resultType="Long" parameterType="ProductPager">
+		select count(product_num) from product
+		where 
+		<choose>
+			<when test="kind == 'category'">
+				category_num
+			</when>	
+			
+			<when test="kind == 'name'">
+				name
+			</when>	
+			
+			<otherwise>
+				color
+			</otherwise>
+		</choose>
+		like '%' || #{search} || '%'
+	</select>
+	
+	<update id="setUpdate_admin" parameterType="ProductDTO">
+		update product set name=#{name}, price=#{price}, stock=#{stock} where product_num=#{product_num}
+	</update>
+	
+</mapper>

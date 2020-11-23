@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ph4.s1.voluntary.VoluntaryDAO">
+
+	<!-- 썸네일에 쓸 파일이름 join해서 전체 리스트 뽑기위함 -->
+	<resultMap type="VoluntaryDTO" id="getFileList">
+		<id column="num" property="num"></id>
+		<result column="title" property="title"/>
+		<result column="writer" property="writer"/>
+		<result column="contents" property="contents"/>
+		<result column="regDate" property="regDate"/>
+		<result column="hit" property="hit"/>
+		<association property="voluntaryFileDTO" javaType="VoluntaryFileDTO" resultMap="VoluntaryFile">
+		</association>
+	</resultMap>
+	
+	<resultMap type="VoluntaryFileDTO" id="VoluntaryFile">
+			<id column="fileNum" property="fileNum"></id>
+			<result column="num" property="num"/>
+			<result column="filename" property="fileName"/>
+			<result column="oriname" property="oriName"/>
+	</resultMap>
+
+	<select id="getVoluntaryList" resultMap="getFileList" parameterType="Pager">
+		select * from
+		(select rownum R, N.* from
+		(select vf.* from 
+			(select v.* , f.fileName
+			from voluntaryboard v
+			left outer join (select num, max(fileName) as fileName from volboardfile group by num) f on v.num = f.num) vf
+		
+		where
+		<choose>
+			<when test="kind == 'tt'">
+				title
+			</when>
+
+			<when test="kind == 'wr'">
+				writer
+			</when>
+
+			<otherwise>
+				contents
+			</otherwise>
+		</choose>
+		like '%'||#{search}||'%' order by num desc) N)
+		where R between
+		#{startRow} and #{lastRow}
+	</select>
+
+	<select id="getCount" resultType="Long" parameterType="Pager">
+		select count(num) from voluntaryboard
+		where
+		<choose>
+			<when test="kind == 'tt'">
+				title
+			</when>
+			<when test="kind == 'wr'">
+				writer
+			</when>
+			<otherwise>
+				contents
+			</otherwise>
+		</choose>
+		like '%' || #{search} || '%'
+	</select>
+
+	<select id="getVoluntaryOne" resultType="VoluntaryDTO">
+		select *
+		from voluntaryboard where num = #{num}
+	</select>
+
+	<update id="setVoluntaryUpdate" parameterType="VoluntaryDTO">
+		update
+		voluntaryboard set title = #{title} , contents = #{contents} where num=#{num}
+	</update>
+
+	<delete id="setVoluntaryDelete" parameterType="VoluntaryDTO">
+		delete
+		voluntaryboard where num = #{num}
+	</delete>
+
+	<insert id="setVoluntaryInsert" parameterType="VoluntaryDTO">
+		<selectKey keyProperty="num" resultType="Long" order="BEFORE">
+        	select VOL_SEQ.nextval from dual
+        </selectKey>
+		insert into
+		voluntaryboard values(#{num}, #{title}, #{writer}, #{contents} ,sysdate, 0)
+	</insert>
+	
+	
+</mapper>    

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.ph4.s1.store.product.productDetail.ProductDetailDAO">
+	
+	<select id="getList" parameterType="ProductDetailDTO" resultType="ProductDetailDTO">
+		select * from productDetail where product_num = #{product_num}
+	</select>
+	
+	<insert id="setInsert" parameterType="ProductDetailDTO">
+		insert into productDetail values (productDetail_seq.nextval, #{product_num}, #{fileName}, #{oriName}, #{id})
+	</insert>
+	
+	<delete id="setDelete" parameterType="ProductDetailDTO">
+		delete from productDetail where product_num = #{product_num}
+	</delete>
+</mapper>

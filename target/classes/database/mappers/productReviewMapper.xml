@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ 
+<mapper namespace="com.ph4.s1.store.product.review.ProductReviewDAO">
+	<select id="getList" resultType="ProductReviewDTO" parameterType="ReviewPager">
+		select * from
+		(select rownum R, N.* from
+		(select * from productReview
+		where product_num = #{product_num}
+		order by review_num desc) N)
+		where R between #{startRow} and #{lastRow}
+	</select>
+	
+	<select id="getCount" resultType="Long" parameterType="LostReplyPager">
+		select count(review_num) from productreview where product_num = #{product_num}
+	</select>
+	
+	<insert id="setInsert" parameterType="ProductReviewDTO">
+		  <selectKey keyProperty="review_num" resultType="Long" order="BEFORE">
+   	      	  select productreview_seq.nextval from dual
+   	      </selectKey>
+		insert into productreview values (#{review_num}, #{product_num}, #{id}, #{starCount}, #{contents})
+	</insert>
+	
+	<delete id="setDelete" parameterType="ProductReviewDTO">
+		delete from productreview where review_num = #{review_num}
+	</delete>
+	
+	
+	
+	
+ <!-- ******************** admin ******************** -->	
+	<select id="getReviewList_admin" parameterType="Pager" resultMap="getProductList">
+        select * from
+		(select rownum R, rv.* from
+		(select * from (select PR.*, P.name, P.color, P.weight from 
+         productreview PR left join product P
+         on PR.product_num = P.product_num) where 
+		<choose>
+			<when test="kind == 'id'">
+				id
+			</when>	
+			
+			<otherwise>
+				name
+			</otherwise>
+		</choose>
+		like '%'||#{search}||'%' order by review_num desc) rv)
+		where R between #{startRow} and #{lastRow}
+	</select>
+	
+	<resultMap type="ProductReviewDTO" id="getProductList">
+         <result column="review_num" property="review_num"/>
+         <result column="product_num" property="product_num"/>
+         <result column="id" property="id"/>
+         <result column="starCount" property="starCount"/>
+         <result column="contents" property="contents"/>
+         <association property="productDTO" javaType="ProductDTO" resultMap="Product">
+		</association>
+	</resultMap>
+	
+	<resultMap type="ProductDTO" id="Product">
+			<id column="product_num" property="product_num"></id>
+			<result column="name" property="name"/>
+			<result column="color" property="color"/>
+			<result column="weight" property="weight"/>
+	</resultMap>
+	
+	<select id="getCount_admin" parameterType="Pager" resultType="Long">
+		select count(review_num) from productreview
+	</select>
+	
+	<select id="getReviewOne_admin" parameterType="ProductReviewDTO" resultType="ProductReviewDTO" resultMap="getProductList">
+		select PR.*, P.name, P.color from 
+        productreview PR left join product P
+        on PR.product_num = P.product_num
+        where PR.review_num = #{review_num}
+	</select>
+</mapper>
