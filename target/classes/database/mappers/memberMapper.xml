@@ -19,7 +19,7 @@
 
    <insert id="setMemberJoin" parameterType="MemberDTO">
          insert into member values(#{id}, #{pw}, #{name}, #{email}, #{phone}, 
-         #{zipCode}, #{address}, #{detailAddress}, #{extraAddress})
+         #{zipCode}, #{address}, #{detailAddress}, #{extraAddress}, #{memberType})
    </insert>
    
    <delete id="setMemberDelete" parameterType="MemberDTO">

@@ -27,6 +27,7 @@
       <div class="col-12">
       <h1 class="join-title">개인 회원가입</h1>
       <form action="./memberJoin" method="post" id="join-form">
+      <input type="hidden" name="memberType" value="${dto.memberType}">
       <div class="p1">
          <div class="panel-group" id="accordion">
           <div class="panel panel-first">

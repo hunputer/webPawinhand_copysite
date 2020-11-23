@@ -12,7 +12,14 @@ public class MemberDTO {
    private String address;
    private String detailAddress;
    private String extraAddress;
+   private String memberType;
    
+   public String getMemberType() {
+	 return memberType;
+   }
+   public void setMemberType(String memberType) {
+	   this.memberType = memberType;
+   }
    
    public String getId() {
       return id;

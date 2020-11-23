@@ -105,6 +105,7 @@ public class MemberController {
 		@PostMapping("memberJoin")
 		public ModelAndView setMemberJoin(MemberDTO memberDTO) throws Exception{
 			ModelAndView mv = new ModelAndView();
+			System.out.println(memberDTO.getMemberType());
 			int result = memberService.setMemberJoin(memberDTO);
 			if(result>0) {
 				mv.addObject("msg" , "포인핸드에 오신걸 환영합니다!");
@@ -126,8 +127,9 @@ public class MemberController {
 	}
 	
 	@GetMapping("memberJoinForm")
-	public ModelAndView setMemberJoinForm()throws Exception{
+	public ModelAndView setMemberJoinForm(MemberDTO memberDTO) throws Exception{
 		ModelAndView mv = new ModelAndView();
+		mv.addObject("dto", memberDTO);
 		mv.setViewName("member/memberJoinForm");
 		return mv;
 	}
