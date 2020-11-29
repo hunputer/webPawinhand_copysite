@@ -1,6 +1,7 @@
 package com.ph4.s1.member;
 
 import java.lang.reflect.Member;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ph4.s1.member.MemberDTO;
+import com.ph4.s1.store.pay.OrderDetailDTO;
+import com.ph4.s1.store.pay.OrderListDTO;
+import com.ph4.s1.store.pay.PayInfoDTO;
+import com.ph4.s1.store.pay.StorePayService;
 import com.ph4.s1.board.shelter.ShelterDTO;
 
 
@@ -21,15 +26,36 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
-	
+	@Autowired
+	private StorePayService StorePayService;
 	
 	@GetMapping("memberPage")
-	public ModelAndView getmemberPage()throws Exception{
+	public ModelAndView getmemberPage(HttpSession session)throws Exception{
 		ModelAndView mv = new ModelAndView();
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		System.out.println(memberDTO.getId());
+		String id = memberDTO.getId();
+		//orderDetail가져오기
+		List<OrderDetailDTO> ar = StorePayService.setMyPage(id);
+		
+		System.out.println("컨트롤러단");
+		for(int i =0; i<ar.size(); i++) {
+			System.out.println(ar.get(i).getOrder_num());
+		}
+		mv.addObject("list", ar);
 		mv.setViewName("member/memberPage");
 		return mv;
 	}
 	
+	@GetMapping("viewOrderList")
+	public ModelAndView getOrderList_mp(OrderListDTO orderListDTO) throws Exception{
+		ModelAndView mv=new ModelAndView();
+		orderListDTO = StorePayService.getOrderList(orderListDTO);
+		
+		mv.addObject("list", orderListDTO);
+		mv.setViewName("member/viewOrderList");
+		return mv;
+	}
 //----------------------------------------------------------------------------------------------------------	
 	
 	@GetMapping("memberLogin")

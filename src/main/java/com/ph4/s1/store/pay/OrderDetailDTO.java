@@ -17,8 +17,16 @@ public class OrderDetailDTO {
 	private long ptotal;
 	
 	private ProductDTO productDTO;
+	private PayInfoDTO payInfoDTO;
 	
 	
+	
+	public PayInfoDTO getPayInfoDTO() {
+		return payInfoDTO;
+	}
+	public void setPayInfoDTO(PayInfoDTO payInfoDTO) {
+		this.payInfoDTO = payInfoDTO;
+	}
 	public ProductDTO getProductDTO() {
 		return productDTO;
 	}

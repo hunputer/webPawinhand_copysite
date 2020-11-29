@@ -19,7 +19,7 @@
 	}
 
 #btnDiv {
-	width: 1000px;
+	width: 825px;
 	height: 30px;
 	text-align: right;
 	margin-bottom: 10px;
@@ -48,7 +48,7 @@
 .volUl li {
 	width: 825px;
 	height: 150px;
-	border: 2px solid black;
+	border: 2px solid #a6a6a6;
 	margin-bottom: 15px;
 	border-radius: 5px;
 	font-size: 8px;
@@ -101,6 +101,7 @@
   	letter-spacing: -0.01em;
 	font-size: 13px;
 	color: gray;
+	   white-space: pre-wrap;
 	
 }
 .pageDiv {
@@ -111,7 +112,6 @@
       color: #FDC033;
       font-size: 0.8em;
       font-weight: 500;
-      padding: 5px 8px;
    }
    
 </style>
@@ -132,7 +132,6 @@
 						<c:if test="${member != null}">
 							<input type="button" value="글쓰기" id="wrbtn">
 						</c:if>
-
 					</div>
 					<ul class="volUl">
 						<c:forEach items="${dto}" var="dto" varStatus="vs">
@@ -150,7 +149,7 @@
 								<div id="volDiv2">
 									<a href="./voluntarySelect?num=${dto.num}">${dto.title}</a>
 									<div id="a">
-										<pre>${dto.contents}<pre>
+										<pre>${dto.contents}</pre>
 									</div>
 								</div>
 								<div id="volDiv3">

@@ -59,6 +59,8 @@
 		<result column="ptotal" property="ptotal"/>
 		<association property="productDTO" javaType="ProductDTO" resultMap="Product">
 		</association>
+		<association property="payInfoDTO" javaType="PayInfoDTO" resultMap="payinfo">
+		</association>
 	</resultMap>
 	
 	<resultMap type="ProductDTO" id="Product">
@@ -72,6 +74,41 @@
 			<result column="descriptions" property="descriptions"/>
 			<result column="regDate" property="regDate"/>
 	</resultMap>
+	
+ 	<resultMap type="PayInfoDTO" id="payinfo">
+			<result column="order_num" property="order_num"/>
+			<result column="id" property="id"/>
+			<result column="payMethod" property="payMethod"/>
+			<result column="totalPrice" property="totalPrice"/>
+			<result column="isPay" property="isPay"/>
+			<result column="payDate" property="payDate"/>
+			<result column="endDate" property="endDate"/>
+	</resultMap>
+	<!--  
+ 	<resultMap type="MemberDTO" id="myPageOD">
+ 		<id column="id" property="id"></id>
+		<result column="pw" property="pw"/>
+		<result column="name" property="name"/>
+		<result column="email" property="email"/>
+		<result column="phone" property="phone"/>
+		<result column="points" property="points"/>
+		<result column="zipCode" property="zipCode"/>
+		<result column="address" property="address"/>
+		<result column="detailAddress" property="detailAddress"/>
+		<result column="extraAddress" property="extraAddress"/>
+		<result column="member_type" property="member_type"/>
+		<association property="orderDetailDTO" javaType="OrderDetailDTO" resultMap="getOD">
+		</association>
+ 	</resultMap>
+ 	-->
+ 	<select id="setMyPage" parameterType="java.lang.String" resultMap="getOD">
+ 		select m.id, o.*, p.ispay
+		from member m
+		inner join orderDetail o on o.id = m.id
+		inner join payinfo p on p.order_num = o.order_num
+		where m.id = #{id}
+		order by o.order_num desc
+ 	</select>
  	
  	
  	<select id="getOrderDetail" parameterType="OrderListDTO" resultMap="getOD">
@@ -88,4 +125,5 @@
 	<select id="getDepositInfo" parameterType="OrderListDTO" resultType="DepositInfoDTO">
 		select * from depositInfo where order_num=#{order_num}
 	</select>
+	
 </mapper>

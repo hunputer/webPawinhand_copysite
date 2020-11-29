@@ -74,4 +74,8 @@ public class StorePayDAO {
 	public DepositInfoDTO getDepositInfo(OrderListDTO orderListDTO) throws Exception{
 		return sqlSession.selectOne(NAMESPACE+"getDepositInfo", orderListDTO);
 	} 
+	
+	public List<OrderDetailDTO> setMypage(String id) throws Exception{
+		return sqlSession.selectList(NAMESPACE+"setMyPage", id);
+	}
 }

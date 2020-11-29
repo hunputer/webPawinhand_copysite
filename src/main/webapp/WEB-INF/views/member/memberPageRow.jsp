@@ -6,7 +6,7 @@
 				<li>
 					<h2>쇼핑정보</h2>
 					<ul class="myPage-item">
-						<li><a href="#">- 주문목록/배송조회</a></li>		
+						<li><a href="${pageContext.request.contextPath}/member/memberPage">- 주문목록/배송조회</a></li>		
 						<li><a href="#">- 취소/반품/교환 내역</a></li>		
 						<li><a href="#">- 환불/입금 내역</a></li>		
 						<li><a href="../cart/cartList">- 찜리스트</a></li>

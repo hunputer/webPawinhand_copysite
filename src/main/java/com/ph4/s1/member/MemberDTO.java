@@ -1,5 +1,7 @@
 package com.ph4.s1.member;
 
+import com.ph4.s1.store.pay.OrderDetailDTO;
+
 public class MemberDTO {
    
    private String id;
@@ -13,8 +15,8 @@ public class MemberDTO {
    private String detailAddress;
    private String extraAddress;
    private long member_type;
-   
-   
+  
+
    public String getId() {
       return id;
    }

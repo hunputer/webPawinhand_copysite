@@ -28,8 +28,12 @@ public class StorePayController {
 		ModelAndView mv = new ModelAndView();
 		System.out.println("스토어페이먼트들어옴");
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		long result =  storePayService.setOrderList_card(orderListDTO,detailNum,detailAmount,member.getId());
 		
+		
+		long result =  storePayService.setOrderList_card(orderListDTO,detailNum,detailAmount,member.getId());
+		OrderListDTO orderListDTO2 = storePayService.getOrderList(orderListDTO);
+		
+		mv.addObject("dto", orderListDTO2);
 		mv.addObject("num", result);
 		mv.setViewName("storePay/storePayment");
 		return mv;
@@ -142,16 +146,6 @@ public class StorePayController {
 	@PostMapping("storePayMain")
 	public ModelAndView getStoreMainPay(MemberDTO memberDTO, long [] product_num, long [] amount) throws Exception{
 		ModelAndView mv = new ModelAndView();
-		/*
-		CartDTO cartDTO = new CartDTO();
-		cartDTO.setId("a1");
-		
-		List<CartDTO> ar = storePayService.getCartDetail(cartDTO);
-		MemberDTO memberDTO = storePayService.getMember(cartDTO);
-		
-		mv.addObject("member", memberDTO);
-		mv.addObject("list", ar);
-		*/
 		
 		System.out.println("1번수량 : "+amount[0]);
 		memberDTO = storePayService.memberOne(memberDTO);
@@ -159,13 +153,9 @@ public class StorePayController {
 		
 		for(int i =0; i<product_num.length; i++) {
 			ProductDTO productDTO = new ProductDTO();
-			productDTO.setProduct_num(product_num[i]);
-			
+			productDTO.setProduct_num(product_num[i]);	
 			productDTO = storePayService.getOrderProduct(productDTO);
 			productDTO.setAmount(amount[i]);
-			
-			
-			
 			ar.add(productDTO);		
 		}
 		

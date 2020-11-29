@@ -132,7 +132,7 @@
 </div>
 
 	<script type="text/javascript">
-		var count=1;
+		var count=0;
 		
 		$("#fileDiv").on("click", ".del", function() {
 			$(this).parent().remove();

@@ -100,4 +100,12 @@ public class ProductController {
 		mv.setViewName("redirect:./goodsSelect?product_num=" + num);
 		return mv;
 	}
+	
+	@GetMapping("/review/myPageReview")
+	public ModelAndView setmyPageReview() throws Exception{
+		ModelAndView mv = new ModelAndView();
+		
+		mv.setViewName("product/review/myPageReview");
+		return mv;
+	}
 }

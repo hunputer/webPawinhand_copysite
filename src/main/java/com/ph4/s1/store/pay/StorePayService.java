@@ -213,4 +213,15 @@ public class StorePayService {
 		
 		return num;
 	}
+	
+	public List<OrderDetailDTO> setMyPage(String id) throws Exception{
+		
+		List<OrderDetailDTO> ar = storePayDAO.setMypage(id);
+		System.out.println("서비스단");
+		for(int i =0; i<ar.size(); i++) {
+			System.out.println(ar.get(i).getOrder_num());
+		}
+		
+		return ar;
+	} 
 }

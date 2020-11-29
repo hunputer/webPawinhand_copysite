@@ -13,7 +13,9 @@
 
 <!-- 결제창 -->
 <script type="text/javascript">
+
 var num = ${num};
+
 
 IMP.init('imp85483548');
 
@@ -21,10 +23,10 @@ IMP.request_pay({
     pg : 'inicis', // version 1.1.0부터 지원.
     pay_method : 'card',
     merchant_uid : 'merchant_' + new Date().getTime(),
-    name : '주문명:결제테스트',
-    amount : 100, //판매 가격
-    buyer_email : 'iamport@siot.do',
-    buyer_name : '구매자이름',
+    name : '별도 지정 안함',
+    amount : '${dto.total}', //판매 가격
+    buyer_email :'impor@im.com' ,
+    buyer_name : '${dto.toName}',
     buyer_tel : '010-1234-5678',
     buyer_addr : '서울특별시 강남구 삼성동',
     buyer_postcode : '123-456'

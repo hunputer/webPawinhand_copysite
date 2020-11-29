@@ -219,9 +219,7 @@ table.calendar td {
 						function() {
 							a = $(this).html();
 							resDate = year + "-" + month + "-" + a;
-							location.href = "./reserveVoluntary?num=${dto.num}&resDate="
-									+ resDate;
-
+							location.href = "./reserveVoluntary?num=${dto.num}&resDate="+ resDate;
 						});
 
 		//날짜 초기화
@@ -251,10 +249,9 @@ table.calendar td {
 
 					if (year == arYear[j] && month == arMonth[j] && dayCount == arDate[j]) {
 
-						ss[i].innerHTML += "<div class='ss' data-toggle='modal' data-target='#myModal' title='"+arNum[j]+"'>"+names[j] + " - "+ arStartTime[j] + "~</div>";
-
+						ss[i].innerHTML += "<div class='ss' data-toggle='modal' data-target='#myModal' title='"+arNum[j]
+						+"'>"+names[j] + " - "+ arStartTime[j] + "~</div>";
 					}
-
 				}
 			}
 
