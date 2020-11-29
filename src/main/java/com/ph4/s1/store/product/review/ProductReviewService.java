@@ -83,7 +83,7 @@ public class ProductReviewService {
 		return ar;
 	}
 	
-	public ProductReviewDTO getReviewOne_admin(ProductReviewDTO productReviewDTO) throws Exception{
-		return productReviewDAO.getReviewOne_admin(productReviewDTO);
+	public ProductReviewOneDTO getReviewOne_admin(ProductReviewOneDTO productReviewOneDTO) throws Exception{
+		return productReviewDAO.getReviewOne_admin(productReviewOneDTO);
 	}
 }

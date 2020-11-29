@@ -41,7 +41,7 @@ public class ProductQnaDAO {
 		return sqlSession.selectOne(NAMESPACE+"getCount_admin", pager);
 	}
 	
-	public ProductQnaDTO getReviewOne_admin(ProductQnaDTO productQnaDTO) throws Exception{
-		return sqlSession.selectOne(NAMESPACE+"getOne_admin", productQnaDTO);
+	public ProductQnaOneDTO getOne_admin(ProductQnaOneDTO productQnaOneDTO) throws Exception{
+		return sqlSession.selectOne(NAMESPACE+"getOne_admin", productQnaOneDTO);
 	}
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!Doctype html>
 <html>
 <head>
@@ -76,12 +77,6 @@
 		padding-top: 15px;
 	}
 	
-	.amount > span{
-		font-size: 1.1em;
-   		letter-spacing: 0.02em;
-    	color: #B4B4B4;
-    	font-weight: 300;
-	}
 </style>
 
 <title>Project</title>
@@ -133,7 +128,7 @@
 				<tr><th colspan="2" class="goods-sname" style="width:480px">${dto.name}</th></tr>
 				<tr class="goods-items"><th>정가</th><td>${dto.price}원</td></tr>
 				<tr class="goods-items"><th>판매가</th><td>${dto.price}원</td></tr>
-				<tr class="goods-items"><th>구매제한</th><td>옵션당 최소1개</td></tr>
+				<tr class="goods-items"><th>구매제한</th><td>옵션당 최소 1개</td></tr>
 				<tr class="goods-items"><th>배송비</th><td>3,000원</td></tr>
 				<tr class="goods-items"><th>상품코드</th><td>${dto.product_num}</td></tr>
 				<tr class="goods-items"><th>카테고리</th><td>악세사리</td></tr>
@@ -142,31 +137,24 @@
 			</table>
 		
 		<form name="goodsSelect-frm" method="post">
+			<input type="hidden" name="id" value="${member.id}"/>
 			<input type="hidden" name="product_num" value="${dto.product_num}">
 			<input type="hidden" name="price" value="${dto.price}" id="price">
-			
-			<div class="amount" style="height: 70px;border-top-style: solid;border-top-width: 1px;border-bottom-color: gray;">
-			<input type="hidden" name="id" value="${member.id}">
-				<span>수량</span>
-				<select style="width: 300px;margin-left: 60px" name="amount" id="amount">
-					<option value="">선택</option>
-					<option value="1">1개</option>
-					<option value="2">2개</option>
-					<option value="3">3개</option>
-					<option value="4">4개</option>
-					<option value="5">5개</option>
-					<option value="6">6개</option>
-					<option value="7">7개</option>
-					<option value="8">8개</option>
-					<option value="9">9개</option>
-					<option value="10">10개</option>
-				</select>
+			<input type="hidden" name="id" value="${member.id}" id="id">
+			<div class="amount" style="height: 40px;border-top-style: solid;border-top-width: 1px;border-bottom-color: gray;">
+			<span>수량</span>
+				<div class="combo-box">
+					<button type="button" id="minus-button" aria-label="Add"></button>
+					<input type="text" value="1" name="amount" id="amount" />
+					<button type="button" id="plus-button" aria-label="Remove"></button>
+				</div>
+
 			</div>
 			<div class="goods-detail3">
-				<button class="cart-btn" formaction="../cart/cartInsert">장바구니</button>
-				<button class="pay-btn"  formaction="../storePay/storePayMain">구매하기</button>
+				<button class="btn btn-default okbtn" formaction="../cart/cartInsert">장바구니</button>
+				<button class="btn btn-default nobtn"  formaction="../storePay/storePayMain">구매하기</button>
 			</div>
-			<input type="hidden" name="totalPrice" id="totalPrice" value="0">
+			<input type="hidden" name="totalPrice" id="totalPrice" value="${dto.price}">
 		</form>
 		
 		<c:if test="${member.id == 'admin'}">
@@ -193,7 +181,7 @@
 <script type="text/javascript">
 	var curPage = 1;
 	detailList();
-
+	
 	$(".thumbnailImg").click(function(){
 		var src = $(this).attr("src");
 		$("#mainImg").attr("src",src);
@@ -281,16 +269,41 @@
 	$("#menu_list").on("click", "#qnaInsertbtn", function(){
 		var option = "width = 576, height = 500, top = 100, left = 200, location = no";
 		window.open("../productQna/productQnaInsert?product_num=${dto.product_num}","insert",option);
-	})
+	});
+
+	
+	
+	var amount=document.getElementById("amount").value; 
+	var totalPrice=document.getElementById("totalPrice").value;
+	var price=document.getElementById("price").value;
+ 	
+ $("#minus-button").click(function(){
+	 if(amount>1){
+		 amount--;
+		 $("#amount").val(amount);
+		 totalPrice = amount * ${dto.price};
+		 $("#totalPrice").val(totalPrice);
+	 }else {
+		 alert("1개 이상부터 구매하실 수 있습니다.");
+	 }
+ });
+ 
+ $("#plus-button").click(function(){
+	amount++;
+	 $("#amount").val(amount); 
+	 totalPrice = amount * price;
+	 $("#totalPrice").val(totalPrice);
+ });
 	
 	//totalPrice
 	$("#amount").change(function(){ 
 	var price= ${dto.price}; 
-	var amount=document.getElementById("amount").value;  
+	document.getElementById("totalPrice").value=result;
 	var result= parseInt(price)*parseInt(amount); 
 	document.getElementById("totalPrice").value=result;
-	
-	});
+	console.log(result);
+	});	
+
 
 </script>
 </body>

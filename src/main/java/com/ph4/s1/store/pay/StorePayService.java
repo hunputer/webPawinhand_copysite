@@ -95,16 +95,16 @@ public class StorePayService {
 		
 		System.out.println(payMethod);
 		
-		//payMethod가 신용카드로 잘 넘어온것은, 이미 결제가 완료되었다는 뜻임!!!
+		//payMethod가 신용카드로 여기로 넘어온것은 결제가 안된것임
 		//결제된애만 포인트, 재고 작업해주기
-		if(payMethod.equals("신용카드/카카오페이/네이버페이")) {
+	/*	if(payMethod.equals("신용카드/카카오페이/네이버페이")) {
 			payInfoDTO.setIsPay(1);
 			storePayService.setUsePoints(usePoint,id);
 			storePayService.setAddPoints(addPoint, id);
 			storePayService.setProductStock(detailNum, detailAmount);
 			
 		}
-		
+		*/
 		int payInfoResult = storePayDAO.setPayInfo(payInfoDTO);
 		
 		System.out.println("결제정보 들어갔는지 : "+payInfoResult);
@@ -113,6 +113,7 @@ public class StorePayService {
 		return num;
 	}
 	
+
 	//사용 포인트 빼기
 	public void setUsePoints(long usePoint, String id) throws Exception{
 		
@@ -183,5 +184,33 @@ public class StorePayService {
 	public DepositInfoDTO getDepositInfo(OrderListDTO orderListDTO) throws Exception{
 		return storePayDAO.getDepositInfo(orderListDTO);
 	}
+	public int setPayInfo(PayInfoDTO payInfoDTO) throws Exception{
+		return storePayDAO.setPayInfo(payInfoDTO);
+	}
+	
+	public long setOrderList_card(OrderListDTO orderListDTO,long [] detailNum, long [] detailAmount, String id) throws Exception{
 
+		int result =  storePayDAO.setOrderList(orderListDTO);
+		long num = orderListDTO.getOrder_num();
+		
+		//orderDetail에 넣는 작업
+			for(int i=0; i<detailNum.length; i++) {
+				ProductDTO dto = new ProductDTO();
+				dto.setProduct_num(detailNum[i]);
+				dto = storePayDAO.getOrderProduct(dto);
+					
+				OrderDetailDTO orderDetailDTO = new OrderDetailDTO();
+				orderDetailDTO.setId(id);
+				orderDetailDTO.setOrder_num(orderListDTO.getOrder_num());
+				orderDetailDTO.setProduct_num(dto.getProduct_num());
+				orderDetailDTO.setName(dto.getName());
+				orderDetailDTO.setAmount(detailAmount[i]);
+				orderDetailDTO.setPtotal(dto.getPrice()*detailAmount[i]);
+					
+				int r = storePayDAO.setOrderDetail(orderDetailDTO);
+				System.out.println("오더 디테일 셋팅 결과:"+r);
+			}
+		
+		return num;
+	}
 }

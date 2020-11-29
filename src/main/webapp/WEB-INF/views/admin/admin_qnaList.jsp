@@ -122,6 +122,7 @@
 				<td>작성자</td>
 				<td>내용</td>
 				<td>작성일</td>
+				<td>답변</td>
 			</tr>
 			
 			<c:forEach items="${list}" var="dto" varStatus="vs">
@@ -131,6 +132,18 @@
 				<td>${dto.id}</td>
 				<td><div id="ad-ql-contents">[제목] ${dto.title}<br> [내용] ${dto.contents}</div></td>
 				<td>${dto.regDate}</td>
+				
+				<td>
+				<c:choose>
+					<c:when test="${dto.qna_num eq dto.productQnaReplyDTO.qna_num}">
+						<div style="color: #0066ff">완료</div>
+					</c:when>
+					
+					<c:otherwise>
+						<div style="color: #ff3300">미완료</div>
+					</c:otherwise>
+				</c:choose>
+				</td>
 			</tr>
 			</c:forEach>
 		</table>

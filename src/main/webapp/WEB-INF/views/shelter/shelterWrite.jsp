@@ -12,30 +12,28 @@
 	*{
 	box-sizing: border-box;
 	}
-
-	.btn{
-		color: white;
-		font-weight: 700;
+	.shelter-container{
+		margin-top: 100px;
 	}
-	#frm{
+	
+	#shelWr-frm{
 		margin: auto;
 		width: 75%;
 	 	margin-bottom: 100px;
-	 	margin-top: 80px;
 	}
-	.menu{
-		text-align: center;
-		font-weight: 700;
-		margin-bottom: 50px;
-		margin-top: 50px;
-	}
-	.form-control{
+	.shelWr-input{
 		width: 55%;
 		display: inline;
 	}
-	.form-group{
+	.shelWr-div{
 		text-align: center;	
 		margin-bottom: 35px;
+	}
+	.shelWr-label{
+		width: 10%;
+		font-size: 1.05em;
+		font-weight: 500;
+		margin-right: 10px;
 	}
 	.animal{
 		margin: 35px auto;
@@ -43,24 +41,23 @@
 		align-items: center;
   		justify-content: center;
 	}
-	.info{
-		width: 10%;
-		font-size: 1.05em;
-		font-weight: 600;
-		margin-right: 6px;
-	}
+
 	.period{
 		width: 26.49%;
+	}
+	#shelWr-period-text{
+		font-size: 0.7em;
+		color: #8c8c8c;
+		margin: -30px 140px 0 0;
+		float: right;
 	}
 	
 	#special{
 		resize: none;
 		height: 70px;
 	}
-	#fileAdd{
-		display: inline;
-		border: 2px solid #FDC033;
-		color: #FDC033;
+	#shelWr-file{
+		padding: 12px 20px;
 	}
 	.file_input_textbox{
 		display: inline;
@@ -72,7 +69,7 @@
 	#f {
 		display:none;
 	}
-	.sel{
+	.shelWr-sel{
 		width: 12%;
 	}
 
@@ -80,6 +77,54 @@
         color: red;
         font-weight: bold;
     }
+    .shelter-menu {
+        display: flex;
+        flex-basis: 100%;
+        align-items: center;
+        color: rgba(0, 0, 0, 0.35);
+        font-size: 12px;
+        margin: 8px 0px;
+        text-align: center;
+		font-weight: 700;
+		margin : 50px 0 60px 0;
+    }
+    .shelter-menu::before,
+    .shelter-menu::after {
+        content: "";
+        flex-grow: 1;
+        background: rgba(0, 0, 0, 0.35);
+        height: 1px;
+        font-size: 0px;
+        line-height: 0px;
+        margin: 0px 16px;
+    }
+    #shelWr-special{
+    	margin-bottom: 100px;
+    }
+    #okbtn{
+		border: 1.5px solid #FDC033;
+		color: #FDC033;
+		font-size: 0.88em;
+		font-weight: 500;
+		margin-top: 25px;
+	}
+	
+	#nobtn{
+		 border: 1px solid #d9d9d9;
+		 margin-left: 5px;
+		 font-size: 0.9em;
+		 margin-top: 25px;
+	}
+	
+	#fileAdd{
+		display: inline;
+		border: 2px solid #FDC033;
+		color: #FDC033;
+		margin-bottom: 15px;
+		font-size: 0.88em;
+		font-weight: 500;
+		padding: 4px 10px;
+	}
 
 	
 </style>
@@ -88,44 +133,51 @@
 <body>
 <c:import url="../template/header.jsp"></c:import>	
 
-	<div class="container">
- 		<form id="frm" action="./shelterWrite" method="post" enctype="multipart/form-data">
+	<div class="container shelter-container">
+		<div class="row">
+			<c:import url="./shelterRow.jsp"></c:import>
+ 		<form id="shelWr-frm" action="./shelterWrite" method="post" enctype="multipart/form-data">
  		
- 		<h4 class="menu" style="background-color: #ffffdb">기본 정보</h4>
+ 		<div class="shelter-menu"><h4>기본 정보</h4></div>
   
-    <div class="form-group">
-	  <label for="보호센터" class="info">보호센터 </label>
-      <input type="text" class="form-control" id="center" name="center">
+    <div class="shelWr-div">
+	  <label for="보호센터" class="shelWr-label">보호센터 </label>
+      <input type="text" class="form-control shelWr-input" 
+      value="${member.name}" id="center" name="center" readonly="readonly" style="background-color: white;">
     </div>
     
-    <div class="form-group">
-	  <label for="보호센터 연락처" class="info">연 락 처 </label>
-      <input type="text" class="form-control" id="center_tel" name="center_tel" 
-      placeholder="- 포함해서 입력해주세요." value="${member.phone}"/>
+    <div class="shelWr-div">
+	  <label for="보호센터 연락처" class="shelWr-label">연 락 처 </label>
+      <input type="text" class="form-control shelWr-input" id="center_tel" name="center_tel" value="${member.phone}"/>
     </div>
     
-    <div class="form-group">
-	  <label for="발견장소" class="info">발견장소 </label>
-      <input type="text" class="form-control" id="place_of_find" name="place_of_find">
+    	<input type="hidden" value="${member.address}" id="center_address" name="center_address">
+    	<input type="hidden" value="${member.id}" id="id" name="id">
+    
+    <div class="shelWr-div">
+	  <label for="발견장소" class="shelWr-label">발견장소 </label>
+      <input type="text" class="form-control shelWr-input" id="place_of_find" name="place_of_find">
     </div>
     
     
-    <div class="form-group">
-	  <label for="공고기간1" class="info">공고기간 </label>
-      <input type="date" style="background-color: white;" readonly="readonly" class="form-control period" id="period_1" name="period_1"> ~ 
-      <input type="date" class="form-control period" id="period_2" name="period_2" onclick="validDate()">
+    <div class="shelWr-div">
+	  <label for="공고기간1" class="shelWr-label">공고기간 </label>
+      <input type="date" style="background-color: white;" readonly="readonly" class="form-control period shelWr-input" id="period_1" name="period_1"> ~ 
+      <input type="date" class="form-control period shelWr-input" id="period_2" name="period_2" onclick="validDate()">
     </div>
+      <p id="shelWr-period-text">*최대 2주까지만 가능합니다.</p>
+    
        
     
     
     <!-- ********************************************************************************************* -->
     
     
-    <h4 class="menu" style="background-color: #ffffdb">동물 정보</h4>
+    <div class="shelter-menu"><h4>동물 정보</h4></div>
     
-    <div class="form-group animal_sel">
-	  <label for="동물" class="info" style="margin-bottom: 13px;">동물 </label>
-		<select name="animal" class="sel" id="animal">
+    <div class="shelWr-div animal_sel">
+	  <label for="동물" class="shelWr-label" style="margin-bottom: 13px;">동물 </label>
+		<select name="animal" class="shelWr-sel" id="animal">
 			<option value="">--선택--</option>
     		<option value="개">개</option>
     		<option value="고양이">고양이</option>
@@ -138,16 +190,16 @@
     </div>
     
     
-    <div class="form-group animal">
-	  <label for="성별" class="info">성별 </label>
-		<select name="sex" class="sel">
+    <div class="shelWr-div animal">
+	  <label for="성별" class="shelWr-label">성별 </label>
+		<select name="sex" class="shelWr-sel">
     		<option value="암컷">암컷</option>
     		<option value="수컷">수컷</option>
     		<option value="미확인">미확인</option>
 		</select>
 		
-	  <label for="중성화" class="info">중성화 </label>
-		<select name="neuter" class="sel">
+	  <label for="중성화" class="shelWr-label">중성화 </label>
+		<select name="neuter" class="shelWr-sel">
 		 	<option value="중성화O">중성화O</option>
     		<option value="중성화X">중성화X</option>
     		<option value="---" selected="selected">---</option>
@@ -155,9 +207,9 @@
     </div>
     
     
-    <div class="form-group animal">
-	  <label for="출생년도" class="info">출생년도 </label>
-		<select name="birth" class="sel">
+    <div class="shelWr-div animal">
+	  <label for="출생년도" class="shelWr-label">출생년도 </label>
+		<select name="birth" class="shelWr-sel">
     		<option value="2010">2010</option>
     		<option value="2011">2011</option>
     		<option value="2012">2012</option>
@@ -172,8 +224,8 @@
     		<option value="---" selected="selected">---</option>
 		</select>
 		
-	  <label for="몸무게" class="info">몸무게(kg) </label>
-		<select name="kg" class="sel">
+	  <label for="몸무게" class="shelWr-label">몸무게(kg) </label>
+		<select name="kg" class="shelWr-sel">
 			<option value="50.0">50.0</option>
 			<option value="49.0">49.0</option>
 			<option value="48.0">48.0</option>
@@ -229,20 +281,22 @@
 		</select>
     </div>
     
-    <div class="form-group animal">
-	  <label for="털색" class="info">털색</label>
-      <input type="text" class="form-control" id="color" name="color"/>
+    <div class="shelWr-div animal">
+	  <label for="털색" class="shelWr-label">털색</label>
+      <input type="text" class="form-control shelWr-input" id="color" name="color"/>
     </div>
     
-    <div class="form-group animal">
-	  <label for="특이사항" class="info">특이사항</label>
-      <textarea class="form-control" id="special" name="special"></textarea>
+    <div class="shelWr-div animal" id="shelWr-special">
+	  <label for="특이사항" class="shelWr-label">특이사항</label>
+      <textarea class="form-control shelWr-input" id="special" name="special"></textarea>
     </div>
     
     <hr>
     
-     <label for="파일추가" class="info" style="margin : 0 -15px 0 30px;">파일추가</label>
-     	<input type="button" class="btn btn-default" id="fileAdd" value="Add" style="margin-bottom: 15px;">
+    <div id="shelWr-file">
+    
+     <label for="파일추가" class="shelWr-label" style="margin : 0 -15px 0 30px;">파일추가</label>
+     	<input type="button" class="btn btn-default" id="fileAdd" value="Add">
 	  
 		<div id ="fileList">
 			<div class="input-group">
@@ -250,12 +304,13 @@
 			</div>		
 		</div>
 		
+	</div>
 		
 	<hr>
  	
- 	<div class="form-group">
-    	<button type="submit" class="btn btn-warning" id="wrbtn">확인</button>
-    	<input type="button" class="btn btn-warning" id="cancel" value="취소">
+ 	<div class="shelWr-div">
+    	<button type="submit" class="btn btn-default" id="okbtn">확인</button>
+    	<input type="button" class="btn btn-default" id="nobtn" value="취소">
     </div>
   </form>
 
@@ -265,7 +320,7 @@
        		<span class="input-group-addon del">X</span>
     	</div>
 	</div>
-	
+	</div>
 	</div>
 
  <!-- **********Script*********************************************************************************** -->
@@ -300,7 +355,7 @@
 	      var hml = "";
 	      
 	      if(animal == "개"){
-	    	 hml += "<label for='품종' class='info'>품종 </label> <select class='s_animal_kind sel' id='animal_kind' name='animal_kind'>";
+	    	 hml += "<label for='품종' class='shelWr-label'>품종 </label> <select class='s_animal_kind shelWr-sel' id='animal_kind' name='animal_kind'>";
 		     hml += "<option value='전체'>전체</option>";
 		     hml += "<option value='기타'>기타</option>";
 	         hml += "<option value='골든리트리버'>골든리트리버</option>";
@@ -336,7 +391,7 @@
 	         hml += "<option value='푸들'>푸들</option>";
 	         hml += "</select>"
 	      }else if(animal == "고양이"){
-		     hml += "<label for='품종' class='info'>품종 </label> <select class='s_animal_kind sel' id='animal_kind' name='animal_kind'>";
+		     hml += "<label for='품종' class='shelWr-label'>품종 </label> <select class='s_animal_kind shelWr-sel' id='animal_kind' name='animal_kind'>";
 			 hml += "<option value='전체'>전체</option>";
 	         hml += "<option value='기타'>기타</option>";
 	         hml += "<option value='노르웨이숲'>노르웨이숲</option>";
@@ -347,7 +402,7 @@
 	         hml += "<option value='먼치킨'>먼치킨</option>";
 	         hml += "</select>"
 	      }else if(animal == "기타"){
-	    	  hml += "<label for='품종' class='info'>품종 </label> <input type='text' class='form-control' id='animal_kind' name='animal_kind'>";
+	    	  hml += "<label for='품종' class='shelWr-label'>품종 </label> <input type='text' class='form-control' id='animal_kind' name='animal_kind'>";
 	      }
 	
         $(".animal_kind_sel").html(hml);
@@ -376,7 +431,7 @@
 	
 //--------------------버튼 이벤트----------------------------------------------------------------------
 	
-	$("#wrbtn").click(function() {
+	$("#okbtn").click(function() {
 		var place_of_find = $("#place_of_find").val();
 		var period_1 = $("#period_1").val();
 		var period_2 = $("#period_2").val();
@@ -404,7 +459,7 @@
 			
 	});
 		
-	$("#cancel").click(function() {
+	$("#nobtn").click(function() {
 	 	if (confirm("이 페이지에서 나가시겠습니까?") == true){    //확인
 	     	location.href="./shelterList";
 

@@ -120,7 +120,8 @@ table.calendar td {
           <p id="modalCon"></p>
         </div>
         <div class="modal-footer">
-        <button type="button" class="modalBtn" data-dismiss="modal" id = "resDel">신청취소</button>
+        	<button type="button" class="modalBtn" data-dismiss="modal" id = "resDel">신청취소</button>
+       
           <button type="button" class="modalBtn" data-dismiss="modal">닫기</button>
         </div>
       </div>
@@ -160,18 +161,29 @@ table.calendar td {
 			});
 			
 			
+			var mid = '${member.id}';
+			
 			$(document).on("click", ".ss", function(event){
 				console.log("들어옴");
 				num =$(this).attr('title');
 				console.log(num);
-				
+								
 				$.ajax(
 					{
 						method:"GET",
 						url:"./reserveInfo",
 						data:{resNum:num},
 						success:function(data){
-							$("#modalCon").html(data);	
+						var mbtn= data.substring(data.indexOf(":")+1, data.indexOf("<"));
+							
+							if(mid == mbtn.trim()){
+								$("#resDel").show();
+							}else{
+								$("#resDel").hide();
+							}
+							$("#modalCon").html(data);
+							
+							
 						}
 					}		
 				);

@@ -58,4 +58,5 @@ public class ProductReviewDTO {
 	public void setContents(String contents) {
 		this.contents = contents;
 	}
+	
 }

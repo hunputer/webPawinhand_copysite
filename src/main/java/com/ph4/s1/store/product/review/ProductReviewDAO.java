@@ -41,7 +41,7 @@ public class ProductReviewDAO {
 		return sqlSession.selectOne(NAMESPACE+"getCount_admin", pager);
 	}
 	
-	public ProductReviewDTO getReviewOne_admin(ProductReviewDTO productReviewDTO) throws Exception{
-		return sqlSession.selectOne(NAMESPACE+"getReviewOne_admin", productReviewDTO);
+	public ProductReviewOneDTO getReviewOne_admin(ProductReviewOneDTO productReviewOneDTO) throws Exception{
+		return sqlSession.selectOne(NAMESPACE+"getReviewOne_admin", productReviewOneDTO);
 	}
 }

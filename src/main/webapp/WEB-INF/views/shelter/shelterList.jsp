@@ -11,18 +11,17 @@
 <style type="text/css">
 	
 	#wrbtn{
-		border: 1.5px solid #a6a6a6;
+		border: 1.5px solid #FDC033;
 		color: #FDC033;
 		font-size: 0.8em;
 		font-weight: 500;
 		float: left;
 		margin-bottom: 15px;
-		border-radius: 0.15em;
 		padding: 5px 8px;
 	}
 	.listbox{
 		width: 100%;
-		height: 230px;
+		height: 210px;
 		line-height: inherit;
 		border: 2px solid #a6a6a6;
 		border-radius: 0.15em;
@@ -33,16 +32,19 @@
 		cursor: pointer;
 	}
 	.list-contents{
-		font-size: 1.1em;
-		font-weight:400;
+		font-size: 0.98em;
+		font-weight: 400;
 		margin-left: 30px;
-		margin-bottom: 17px;
+		margin-bottom: 15px;
 	}
 	
 	.list-contents img{
 		margin-right: 5px;
 	}
 	
+	#sList-listbox-contents{
+		width: 80%;
+	}
 	.new{
 		float: right;
 	}
@@ -54,11 +56,11 @@
 		margin-bottom : 100px;
 		float: inherit;
 	}
-	#shelter-container{
+	.shelter-container{
 		margin-top: 100px;
 	}
 	
-	#shelter-container a {
+	.shelter-container a {
 		text-decoration: none;
 		letter-spacing: -0.03em;
 		color: #404040;
@@ -91,6 +93,15 @@
 		padding: 0px;
 		margin-left: 3px;
 	}
+	#sList-listbox-contents{
+		border-bottom-style: 5px solid black; 
+		width: 85%;
+		height: 210px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		display: block;		 
+	}
 	
 
 </style>
@@ -100,15 +111,15 @@
 <c:import url="../template/header.jsp"></c:import>	
 
 	
-	<div class="container" id="shelter-container">
+	<div class="container shelter-container">
 	
 	 <div class="row">
-	 	<div class="col-12 col-md-3 myPage">
-				<h1>보호소</h1>
-				<hr>
-		</div>
+		<c:import url="./shelterRow.jsp"></c:import>
+		
 		<div class="col-12 col-md-9">
+		<c:if test="${member.member_type eq 1}">
     <a href="./shelterWrite"><input type="button" class="btn btn-default" id="wrbtn" value="글쓰기"></a>
+   		</c:if>
     	<form action="./shelterList">
 			<div id="shelList-search-div">
 					<select class="shelList-sel" id="shelList-sel_id" name="kind">
@@ -132,46 +143,46 @@
 			<div>
 				<c:choose>
 					<c:when test="${not empty dto.shelterFileDTO.fileName}">
-						<img src="../resources/upload/shelter/${dto.shelterFileDTO.fileName}" width="330px" height="210px">
+						<img src="../resources/upload/shelter/${dto.shelterFileDTO.fileName}" width="300px" height="190px">
 					</c:when>
 					<c:otherwise>사진없음</c:otherwise>
 				</c:choose>
 			</div>
 
-			<div style="border-bottom-style: 5px solid black; width: 85%">
+			<div id="sList-listbox-contents">
 				<p class="list-contents">
 					<c:choose>
 						<c:when test="${dto.animal eq '개'}">
-							<img alt="" src="../resources/img/common/animal_dog.png" width="22px" height="22px">
+							<img alt="" src="../resources/img/common/animal_dog.png" width="20px" height="20px">
 						</c:when>
 						
 						<c:when test="${dto.animal eq '고양이'}">
-							<img alt="" src="../resources/img/common/animal_cat.png" width="22px" height="22px">
+							<img alt="" src="../resources/img/common/animal_cat.png" width="20px" height="20px">
 						</c:when>
 						
 						<c:otherwise>
-							<img alt="" src="../resources/img/common/animal_etc.png" width="22px" height="22px">
+							<img alt="" src="../resources/img/common/animal_etc.png" width="20px" height="20px">
 						</c:otherwise>
 					</c:choose>
 					
 					<c:choose>
 						<c:when test="${dto.sex eq '암컷'}">
-							<img alt="" src="../resources/img/common/animal_female.png" width="22px" height="22px">
+							<img alt="" src="../resources/img/common/animal_female.png" width="20px" height="20px">
 						</c:when>
 
 						<c:when test="${dto.sex eq '수컷'}">
-							<img alt="" src="../resources/img/common/animal_male.png" width="22px" height="22px">
+							<img alt="" src="../resources/img/common/animal_male.png" width="20px" height="20px">
 						</c:when>		
 
 						<c:otherwise>
-							<img alt="" src="../resources/img/common/animal_x.png" width="22px" height="22px">
+							<img alt="" src="../resources/img/common/animal_x.png" width="20px" height="20px">
 						</c:otherwise>				
 					</c:choose>
 				</p>
   				<p class="list-contents">·품   종 : [${dto.animal}] ${dto.animal_kind}</p>
-  				<p class="list-contents">·등록일 : ${dto.period_1}</p>
+  				<p class="list-contents">·공고기간 : ${dto.period_1} - ${dto.period_2}</p>
+  				<p class="list-contents" id="shelList-pof">·구조장소 : ${dto.place_of_find}</p>
   				<p class="list-contents">·지   역 : ${dto.center}</p>
-  				<p class="list-contents">·구조장소 : ${dto.place_of_find}</p>
 			</div>
 			
 			<div class="new" style="width: 20%; height: 20%">

@@ -19,19 +19,8 @@
 		min-width : 700px;
 	}
 	
-	.main{
-		margin : 110px auto 0px;
-		min-width : 700px;
-		width : 1100px;
-		height : 2000px;
-		padding-left: 30px;
-	}
-	
 	.description{
-		margin-left: 10px;
-		margin-top: 50px;
-		width : 1100px;
-		height : 1100px;
+		margin-top: 20px;
 	}
 	
 	.replytable{
@@ -60,7 +49,9 @@
 		display : inline-block;
 	}
 	
-	
+	.state-select{ 
+		color: white;
+	}
 	
 	.reply{
 		display: inline-block;
@@ -91,27 +82,14 @@
 		margin-top : 20px;
 	}
 	
-	.state{
-		display: inline-block;
-		margin-right: 10px;
-		width : 35px;
-		height: 25px;
-		padding-left: 2px;
-		color: white;
-	}
-	
 	.titles{
 		margin-right : 10px;
 		color: gray;
 	}
 	
-	.replyTitle{
-		margin-bottom: 20px;
-	}
-	
 	.replyTitles{
 		display : inline-block;
-		font-size: 14px;
+		font-size: 1em;
 		color : gray;
 	}
 	
@@ -137,15 +115,15 @@
 	.slash{
 		color: white;
 	}
-	
-	.replyText{
-		width : 600px;
-	}
-	
+
 	.replyTextTable{
 		margin : 0px 5px 5px 5px;
 		border: 1px black solid;
 		padding: 2px;
+	}
+	
+	.reply-item {
+		border-bottom: 1px #d9d9d9 solid;
 	}
 </style>
 
@@ -154,9 +132,36 @@
 <body>
 
 <c:import url="../template/header.jsp"></c:import>
-
-<div class="main">
-  <div class="container">
+<div class="container">
+	<div class="row">
+		<div class="col-12 col-md-2 lost-header">
+		<h1>신고 제보</h1>
+		<hr>
+		<ul class="state-link">
+			<li>
+			<a class="lost-link" href="./lostList?state=">전체</a>
+			</li>
+			<li>
+			<a class="lost-link" href="./lostList?state=실종">실종</a>
+			</li>
+			<li>
+			<a class="lost-link" href="./lostList?state=보호">보호</a>
+			</li>
+			<li>
+			<a class="lost-link" href="./lostList?state=목격">목격</a>
+			</li>
+			<li>
+			<a class="lost-link" href="./lostList?state=완료">완료</a>
+			</li>
+		</ul>
+		</div>
+	
+	<div class="col-12 col-md-10">
+	<div class="ls-item">
+		<div class="state_select" title="${dto.state}">${dto.state}</div>
+		<span>${dto.detailSpecies}</span>
+		<span>성  별 : ${dto.gender} / 나 이 : ${dto.age} / ${dto.color} </span>
+	</div>
   <div id="demo" class="carousel slide" data-ride="carousel">
 
   <!-- Indicators -->
@@ -187,31 +192,11 @@
   </a>
 
 </div>
-</div>
+
 <div class="description">
+
 	<div class="divs">
-		<div class="state" title="${dto.state}">${dto.state}</div>
-		<span class="detailSpecies">${dto.detailSpecies}</span>
-	</div>
-	
-	<div class="divs">
-		<span class="titles">성  별 :</span>
-		<span>${dto.gender}</span>
-	</div>
-	
-	<div class="divs">
-		<span class="titles">나  이 :</span>
-		<span>${dto.age}</span>
-	</div>
-	
-	<div class="divs">
-		<span class="titles">몸무게 :</span>
-		<span>${dto.state}</span>
-	</div>
-	
-	<div class="divs">
-		<span class="titles">털  색 :</span>
-		<span>${dto.color}</span>
+		<span class="div_item">성  별 : ${dto.gender} / 나 이 : ${dto.age} / ${dto.color} </span>
 	</div>
 	
 	<div class="divs">
@@ -242,6 +227,7 @@
 	<hr>
 	
 	<div class="divs">
+		<span class="titles">특이사항 :</span>
 		<span>${dto.contents}</span>
 	</div>
 	<hr>
@@ -258,7 +244,7 @@
 	  <input placeholder="댓글을 입력하세요" class="replyText" type="text" name="contents">
 	  <input type="hidden" value="${dto.num}" name="lostNum">
 	  <input type="hidden" value="${member.id}" name="id">
-	  <button class="btn btn-warning">댓글</button>
+	  <button class="btn primary">댓글</button>
 	</form>
 	
 	<c:if test="${member.id == 'admin' || member.id == dto.id}">
@@ -266,7 +252,8 @@
 		<a id="lostUpdate">글수정</a>
 	</c:if>
 </div>
-	
+</div>
+	</div>
 	<script type="text/javascript">
 	 	var curPage = 1;
 	    getList();
@@ -302,16 +289,18 @@
 		}
 		
 		function stateColor(){
-			var val = $(".state").attr("title");
+			var val = $(".state_select").attr("title");
 			if(val == "목격"){
-				$(".state").css('background-color','#ffc107');
+				$(".state_select").css('background-color','#ffc107');
 			}else if(val == "보호"){
-				$(".state").css('background-color','#28a745');
+				$(".state_select").css('background-color','#28a745');
 			}else if(val == "실종"){
-				$(".state").css('background-color','#fd7e14');
+				$(".state_select").css('background-color','#fd7e14');
 			}else if(val == "완료"){
-				$(".state").css('background-color','#007bff');
+				$(".state_select").css('background-color','#007bff');
 			}
+			
+			$(".state_select").css('color','#fff');
 		}
 	</script>
 </div>

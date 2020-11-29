@@ -115,7 +115,7 @@
 			</tr>
 		<c:choose>
 		  <c:when test="${pager.curPage eq 1}">
-			<tr class="admin-ml-tr" onclick="location.href ='./admin_memberSelect?id=${dto.id}'" style="background-color: #fff7eb">
+			<tr class="admin-ml-tr" onclick="location.href ='./admin_memberSelect?id=${member.id}'" style="background-color: #fff7eb">
 				<td>${member.id}</td>
 				<td>${member.name}</td>
 				<td>${member.email}</td>

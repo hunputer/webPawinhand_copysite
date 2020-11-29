@@ -59,7 +59,7 @@
 		</div>
 	
 		<div class="form-group">
-			id <input type="text" class="form-control" name="id" value="보류" readonly="readonly">
+			id <input type="text" class="form-control" name="id" value="${member.id}" readonly="readonly">
 		</div>
 	
 		<div class="form-group">

@@ -32,4 +32,12 @@ public class CartService {
 	public int getCartCount(CartVO cartDTO) throws Exception {
 		return cartDAO.getCartCount(cartDTO);
 	}
+	
+	public int setCartModify(CartVO cartDTO) throws Exception {
+		return cartDAO.setCartModify(cartDTO);
+	}
+	
+	public CartVO getOne(CartVO cartDTO) throws Exception {
+		return cartDAO.getOne(cartDTO);
+	}
 }

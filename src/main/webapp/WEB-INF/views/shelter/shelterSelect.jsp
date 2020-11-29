@@ -17,6 +17,9 @@
 		margin: 0 0 100px 3px;
 		float: right;
 	}
+	.shelter-container{
+		margin-top: 100px;
+	}
 	#title{
 		text-align: center;
 	}
@@ -47,13 +50,10 @@
 <body>
 <c:import url="../template/header.jsp"></c:import>
 
-  <div class="container" id="shelter-container">
+  <div class="container shelter-container">
   
   	 <div class="row">
-	 	<div class="col-12 col-md-3 myPage">
-				<h1>보호소</h1>
-				<hr>
-		</div>
+		<c:import url="./shelterRow.jsp"></c:import>
 		<div class="col-12 col-md-9">
 		
   	<div id="title">
@@ -103,7 +103,7 @@
   		<h3>·발견장소 : ${dto.place_of_find}</h3>
   		<h3>·특이사항 : ${dto.special}</h3>
   		<h3>·보호센터 : ${dto.center} (Tel: ${dto.center_tel}) 
-  		<a onclick="window.open('./shelterMap?num=${dto.num}','insert','width = 576, height = 400, top = 100, left = 200, location = no');">
+  		<a onclick="window.open('./shelterMap?num=${dto.num}','insert','width = 500, height = 350, top = 100, left = 200, location = no');">
   		<img id="shelter-sel-map" alt="" src="../resources/img/common/map.png" width="25px" height="25px"></a></h3> 
   	</div>	
   		
@@ -111,8 +111,10 @@
   
   
   <input type="button" class="btn btn-default shelter-Sel-btn" value="목록" id="list">
+  <c:if test="${member.member_type eq 1 and member.id eq dto.id}">
   <input type="button" class="btn btn-default shelter-Sel-btn" value="삭제" id="del">
   <input type="button" class="btn btn-default shelter-Sel-btn" value="수정" id="update">
+  </c:if>
   
   </div>
   <script type="text/javascript">

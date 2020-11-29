@@ -22,6 +22,8 @@
          <result column="special" property="special"/>
          <result column="center" property="center"/>
          <result column="center_tel" property="center_tel"/>
+         <result column="center_address" property="center_address"/>
+         <result column="id" property="id"/>
          <association property="shelterFileDTO" javaType="ShelterFileDTO" resultMap="ShelterFile">
 		</association>
 	</resultMap>
@@ -73,7 +75,8 @@
          insert into shelter values
          (#{num}, sysdate, 0,
          #{animal}, #{animal_kind}, #{sex}, #{neuter}, #{color}, #{birth}, #{kg},
-         #{period_1}, #{period_2}, #{place_of_find}, #{special}, #{center}, #{center_tel}
+         #{period_1}, #{period_2}, #{place_of_find}, #{special}, 
+         #{center}, #{center_tel}, #{center_address}, #{id}
          )
       </insert>
       
@@ -102,6 +105,8 @@
          <result column="special" property="special"/>
          <result column="center" property="center"/>
          <result column="center_tel" property="center_tel"/>
+         <result column="center_address" property="center_address"/>
+         <result column="id" property="id"/>
          
       
          <collection property="shelterFileDTOs" ofType="shelterFileDTO" javaType="java.util.List">

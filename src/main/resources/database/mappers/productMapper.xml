@@ -48,7 +48,7 @@
 				color
 			</otherwise>
 		</choose>
-		like '%'||#{search}||'%') P)
+		like '%'||#{search}||'%' order by product_num asc) P)
 		where R between #{startRow} and #{lastRow}
 	</select>
 	

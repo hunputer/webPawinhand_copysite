@@ -101,7 +101,7 @@
 			제목  <input type="text" class="form-control" name="title">
 		</div>
 		<div class="form-group">
-			작성자  <input type="text" class="form-control" name="writer">
+			작성자  <input type="text" class="form-control" name="writer" value="${member.id}" readonly="readonly">
 		</div>
 		<div class="form-group">
 			 <textarea  name="contents" id="contents" placeholder="내용을 입력하세요."></textarea>

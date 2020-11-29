@@ -37,8 +37,25 @@ public class CartController {
 	@PostMapping("cartInsert")
 	public ModelAndView setCartInsert(CartVO cartDTO, HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView();
-		int result = cartService.setCartInsert(cartDTO);
-		mv.setViewName("redirect:./cartList");
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		System.out.println(memberDTO);
+		if(memberDTO == null) {
+			mv.addObject("msg" , "로그인이 필요한 페이지 입니다");
+			mv.addObject("path", "../member/memberLogin");
+			mv.setViewName("common/result");
+		}else {
+			int count = cartService.getCartCount(cartDTO);
+			if(count==0) {
+				cartService.setCartInsert(cartDTO);
+				mv.addObject("msg" , "장바구니에 상품이 담겼습니다");
+				mv.addObject("path", "./cartList");
+			}else {
+				mv.addObject("msg" , "같은 상품이 장바구니에 있습니다.");
+				cartService.setCartModify(cartDTO);
+				mv.addObject("path", "./cartList");
+			}
+			mv.setViewName("common/result");
+		}
 		return mv;
 	}
 	
@@ -47,25 +64,60 @@ public class CartController {
 		ModelAndView mv = new ModelAndView();
 		System.out.println("cartDelete");
 		int result = cartService.setCartDelete(cartDTO);
-		mv.setViewName("redirect:./cartList");
+		if(result>0) {
+			mv.addObject("msg" , "해당 상품 장바구니 삭제 성공");
+			
+		}else {
+			mv.addObject("msg" , "해당 상품 장바구니 삭제 실패");
+		}
+		mv.addObject("path", "./cartList");
+		mv.setViewName("common/result");
 		return mv;
 	}
 	
 	@GetMapping("cartUpdate")
-	public ModelAndView setCartUpdate(long num) throws Exception {
+	public ModelAndView setCartUpdate(CartVO cartDTO) throws Exception {
 		ModelAndView mv = new ModelAndView();
-		CartVO cartDTO = new CartVO();
-		cartDTO.setCartNum(num);
+		cartDTO = cartService.getOne(cartDTO);
 		mv.addObject("dto", cartDTO);
-		mv.setViewName("cart/cartUpdate");
+		mv.setViewName("/cart/cartUpdate");
 		return mv;
 	}
 	
 	@PostMapping("cartUpdate")
-	public ModelAndView setCartUpdate(CartVO cartDTO) throws Exception {
+	public ModelAndView setCartUpdate(CartVO cartDTO, String msg) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		int result = cartService.setCartUpdate(cartDTO);
+		if(result>0) {
+			msg = "장바구니 수량 수정 성공";
+		}else {
+			msg = "장바구니 수량 수정 실패";
+		}
+		mv.addObject("msg", msg);
+		mv.addObject("path", "./cartList");
+		mv.setViewName("common/result");
+		return mv;
+	}
+	
+	@GetMapping("cartModify")
+	public ModelAndView setCartModify(long num) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		CartVO cartDTO = new CartVO();
+		cartDTO.setCartNum(num);
+		mv.addObject("dto", cartDTO);
+		mv.setViewName("cart/cartModify");
+		return mv;
+	}
+	
+	@PostMapping("cartModify")
+	public ModelAndView setCartModify(CartVO cartDTO) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		int result = cartService.setCartModify(cartDTO);
 		mv.setViewName("redirect:./cartList");
 		return mv;
 	}
+	
+
+	
+
 }

@@ -61,8 +61,9 @@ public class ProductQnaService {
 		return ar;
 	}
 	
-	public ProductQnaDTO getOne_admin(ProductQnaDTO productQnaDTO) throws Exception{
-		return productQnaDAO.getReviewOne_admin(productQnaDTO);
+	public ProductQnaOneDTO getOne_admin(ProductQnaOneDTO productQnaOneDTO) throws Exception{
+		return productQnaDAO.getOne_admin(productQnaOneDTO);
 	}
+	
 	
 }

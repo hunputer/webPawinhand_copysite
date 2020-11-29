@@ -14,7 +14,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-12 goods-nav">
-			<nav class="navbar navbar-expand-sm">
+			<nav class="navbar navbar-expand-sm gl-nav">
 			  <!-- Links -->
 			  <ul class="navbar-nav">
 			    <li class="goods-nav-item">
@@ -40,13 +40,13 @@
 			<c:forEach items="${lists}" var="dto">
 				<div class="col-12 col-md-3 sl goods">
 					<a href="./goodsSelect?product_num=${dto.product_num}">	
-						<img style="width: 250px; height: 250px" alt="pet image" src="${pageContext.request.contextPath}/resources/img/upload/product/${dto.fileName}" width="250px" height="250px">
+						<img style="width: 250px; height: 250px" alt="pet image" src="${pageContext.request.contextPath}/resources/img/upload/product/${dto.fileName}" width="250px" height="250px" />
 						<div class="goods-info">
-							<dt class="goods-name">${dto.name}</dt>
-							<dt>${dto.price}원</dt>
-							<dd>
-							 포인핸드 매거진 창간 기념 뱃지포리 / 두디튜브 두디 뱃지바다에서 펼쳐지는 시원한 바캉스, 이번여름은 귀여운 포리&두디와 함께해요
-							</dd>
+							<dl class="goods-name">
+								<dt class="name">${dto.name}</dt>
+								<dt>${dto.price}원</dt>
+								<dd>${dto.descriptions}</dd>
+							</dl>
 						</div>
 					</a>
 				</div>

@@ -5,12 +5,11 @@
 
 <div class="replytable">
 	<c:forEach items="${lists}" var="dto">
-		<div>
+		<div class="reply-item">
 			<c:catch>
 	  			<c:forEach begin="1" end="${dto.depth}">
 		  			<div class="replyEmpty">
 		  				<span class="slash">>>></span>
-		  				
 		  			</div>
 	  			</c:forEach>
 	  		</c:catch>

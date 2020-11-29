@@ -14,7 +14,7 @@
 	on p.product_num = c.product_num) N 
 	FULL OUTER join storefile sf
 	on sf.product_num = N.pnum
-	where N.id = #{id}
+	where N.id = #{id} order by cartNum desc
 </select>
 
 <insert id="setCartInsert" parameterType="CartVO" >
@@ -25,13 +25,22 @@
 </insert>
 
 <select id="getCartCount" resultType="int">
-	select count(*) form cart
+	select count(*) from cart
 	where id = #{id} and product_num= #{product_num}
+</select>
+
+<select id="getOne" resultType="CartVO" parameterType="CartVO">
+	select * from cart where cartNum = #{cartNum}
 </select>
 
 <update id="setCartUpdate" parameterType="CartVO">
 	update cart set amount = #{amount}, totalPrice = #{totalPrice} where cartNum = #{cartNum}
 </update>
+
+<update id="setCartModify" parameterType="CartVO">
+	update cart set amount = amount + #{amount}, totalPrice = totalPrice + #{totalPrice} where id=#{id} and product_num = #{product_num}
+</update>
+
 
 <delete id="setCartDelete" parameterType="CartVO">
 	delete cart where cartNum = #{cartNum}

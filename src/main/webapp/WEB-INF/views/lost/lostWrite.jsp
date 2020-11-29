@@ -263,7 +263,7 @@
 				contentType: false, // 필수
 				data: formData,
 				success: function(data) {
-					alert(fictureNum);
+					alert("사진 파일 업로드 성공");
 					$("#fileResult"+fictureNum).html(data);
 				}
 			});

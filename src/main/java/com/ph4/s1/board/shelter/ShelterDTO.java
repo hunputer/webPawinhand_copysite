@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.ph4.s1.board.file.ShelterFileDTO;
+import com.ph4.s1.member.MemberDTO;
 
 @Component
 public class ShelterDTO {
@@ -26,6 +27,9 @@ public class ShelterDTO {
 	private String special;
 	private String center;
 	private String center_tel;
+	private String center_address; 
+	private String id;
+	
 	private ShelterFileDTO shelterFileDTO;
 	
 	List<ShelterFileDTO> shelterFileDTOs;
@@ -144,6 +148,21 @@ public class ShelterDTO {
 	public void setCenter_tel(String center_tel) {
 		this.center_tel = center_tel;
 	}
+	public String getCenter_address() {
+		return center_address;
+	}
+	public void setCenter_address(String center_address) {
+		this.center_address = center_address;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+	
+	
 	
 	
 	

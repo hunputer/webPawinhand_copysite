@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -8,167 +7,37 @@
 <c:import url="../template/bootStrap.jsp"></c:import>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-	.main{
-		margin : 110px auto 0px;
-		min-width : 700px;
-		width : 1100px;
-		height : 2000px;
-		padding-left: 30px;
-	}
-	
-	.lostList{
-		width : 270px;
-		height : 420px;
-		margin : 0px 50px 50px 0px;
-		float: left;
-		border: 1px gray solid;
-		cursor: pointer;
-	}
-	
-	.lostImage{
-		display : inline-block;
-		width : 270px;
-		height : 275px;
-	}
-	
-	.lostMain{
-		margin-top: 15px;
-		margin-left: 10px;
-		width : 260px;
-		height : 60px;
-	}
-	
-	.detailSpecies{
-	}
-	
-	.detailSpecies > h3{
-		display : inline-block;
-		font-size: 18px;
-	}
-	
-	.shortInfo{
-	
-	}
-	
-	.shortInfo > h3{
-		font-size: 12px;
-	}
-	
-	.lostSub{
-		width : 270px;
-		height: 55px;
-		border-top-width : 1px;
-		border-top-color : gray;
-		border-top-style : solid; 
-		padding-top: 7px;
-		padding-left: 10px;
-	}
-	
-	.lostSub > div > h3{
-		display : inline-block;
-		font-size: 12px;
-	}
-	
-	.dropdowns{
-		margin-bottom: 100px;
-		margin-left: 30px;
-	}
-	
-	.drops {
-		width: 930px;
-		height : 38px;
-		padding-right: 110px;
-	}
-	
-	.dropdown-menu {
-		width: 930px;
-	}
-	
-	.dropContents{
-		display: inline-block;
-		width: 900px;
-		height : 24px;
-		background-color: white;
-	}
-	
-	.dropSearch{
-		display: inline-block;
-		width: 900px;
-		height: 24px;
-		font-size: 11px;
-		letter-spacing: 2px;
-		color: #ffc107;
-	}
-	
-	.selectForm{
-		margin-left: 10px;
-	}
-	
-	.lostProvince{
-		display: inline-block;
-		margin-top : 15px;
-		width: 840px;
-		height: 60px;
-	}
-	
-	.state{
-		display: inline-block;
-		margin-right: 10px;
-		width : 37px;
-		height: 25px;
-		padding-left: 2px;
-		color: white;
-		font-size: 13px;
-		background-color: #ffc107;
-	}
-	
-	.lostProvinceTitle, .animalSpeciesTitle, .dates{
-		display: inline-block;
-		font-size: 15px;
-		margin-right: 3px;
-	}
-	
-	.animalSpecies{
-		margin-top: 10px;
-		margin-bottom: 15px;
-	}
-	
-	.writeIcon{
-		position: fixed;
-		bottom: 20px;
-		right : 250px;
-		cursor: pointer;
-	}
-	
-	.writeIconfocus {
-        border-color: #28a745;
-        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
-    }
-    
-    .radio2{
-    	margin-left: 43px;
-    }
-    
-    .lostdate{
-    	margin-top: 15px;
-    }
-    
-    .dropdownmenu{
-    	background-color: #ffffe6;
-    }
-    
-    
 
-	
-</style>
 </head>
 <body>
 <c:import url="../template/header.jsp"></c:import>
-
-<div class="main">
+<div class="container">
+	<div class="row">
+		<div class="col-12 col-md-2 lost-header">
+		<h1>신고 제보</h1>
+		<hr>
+		<ul class="state-link">
+			<li>
+			<a class="lost-link" href="./lostList?state=">전체</a>
+			</li>
+			<li>
+			<a class="lost-link" href="./lostList?state=실종">실종</a>
+			</li>
+			<li>
+			<a class="lost-link" href="./lostList?state=보호">보호</a>
+			</li>
+			<li>
+			<a class="lost-link" href="./lostList?state=목격">목격</a>
+			</li>
+			<li>
+			<a class="lost-link" href="./lostList?state=완료">완료</a>
+			</li>
+		</ul>
+		</div>
+	
+	<div class="col-12 col-md-10">
 	<div class="dropdowns">
-	 	 <button type="button" class="drops btn btn-warning" data-toggle="dropdown">
+	 	 <button type="button" class="drops btn" data-toggle="dropdown">
 		    	<div class="dropContents">
 			    	<h3 class="dropSearch">
 			    		<c:choose>
@@ -179,7 +48,7 @@
 				    			${lostDTO.lostProvince}
 				    		</c:otherwise>
 			    		</c:choose>
-			    		|
+			    		    |    
 			    		<c:choose>
 				    		<c:when test="${lostDTO.animalSpecies == ''}">
 				    			모든 동물
@@ -199,7 +68,7 @@
 			    	</div>
 				    <div class="lostProvince">
 				    	<h3 class="lostProvinceTitle">지역 :</h3>
-				    	<input type="radio" name="lostProvince" value="">전체
+				    	<input type="radio" name="lostProvince" value="" checked>전체
 				    	<input type="radio" name="lostProvince" value="서울특별시">서울특별시
 		  				<input type="radio" name="lostProvince" value="부산광역시">부산광역시
 		  				<input type="radio" name="lostProvince" value="대구광역시">대구광역시
@@ -223,25 +92,28 @@
 		  			</div>
 		  			<div class="animalSpecies">
 				    	<h3 class="animalSpeciesTitle">품종 :</h3>
-				    	<input type="radio" name="animalSpecies" value="">전체
+				    	<input type="radio" name="animalSpecies" value="" checked>전체
 		  				<input type="radio" name="animalSpecies" value="개">개
 		  				<input type="radio" name="animalSpecies" value="고양이">고양이
 		  				<input type="radio" name="animalSpecies" value="기타">기타
 		  			</div>
-		  			<button class="btn btn-warning">검색하기</button>		
+		  			<input type="hidden" name="state" value="" id="state"/>
+		  			
+    				<button type="submit" class="btn btn-default" id="searchbtn"><img alt="" src="../resources/img/common/search111.png" width="20px" height="20px"></button>	
 			    </form>
 		    </div>
 	  	  </div>
 	</div>
-	<ul>
+	<ul class="lost-list">
 		<c:forEach items="${lists}" var="list" varStatus="i">
 			<li class="lostList" title="${list.num}">
 				<div class="lostImage">
 					<img src="../resources/img/upload/lost/${list.fileName}" width="270" height="270" alt="">
+					<div class="state" title="${list.state}">${list.state}</div>
+					<div class="lost-detail">
 					<div class="lostMain">
 						<div class="detailSpecies">
-							<h3>${list.detailSpecies}</h3>
-							<h3 class="state" title="${list.state}">${list.state}</h3>
+							<h3>${list.detailSpecies}</h3>	
 						</div>
 						<div class="shortInfo">
 							<h3>${list.gender}/${list.color}/${list.age}</h3>
@@ -252,19 +124,26 @@
 							<img src="../resources/img/lost/time.jpg" width="20" height="20" alt="">
 							<h3>${list.lostDate}</h3>
 						</div>
-						<div>
+						<div class="lost-location">
 							<img src="../resources/img/lost/map.jpg" width="20" height="20" alt="">
 							<h3>${list.lostProvince} ${list.lostCity} ${list.lostLocation}</h3>
 						</div>
+					</div>
 					</div>
 				</div>
 			</li>
 		</c:forEach>
 	</ul>
 	<c:if test="${member != null}">
-		<img class="writeIcon" src="../resources/img/lost/write.png" tabindex=0 width="100" height="100" alt="">
+		<img class="writeIcon" src="../resources/img/lost/write.png" tabindex=0 width="50" height="50" alt="">
 	</c:if>
+	
+	</div>
+	
+	
 </div>
+</div>
+
 
 
 </body>
@@ -273,7 +152,7 @@
 	$(".lostList").click(function(){
 		var num = $(this).attr("title");
 		location.href="./lostSelect?num="+num;
-	})
+	});
 	
 	$(".writeIcon").click(function(){
 		window.open("./lostWrite", 'Write Form', 'width=630px, height=700px, scrollbars=yes');
@@ -293,9 +172,43 @@
 	function init(){
 		$("input:radio[name='lostProvince']:radio[value='${lostDTO.lostProvince}']").prop('checked', true);
 		$("input:radio[name='animalSpecies']:radio[value='${lostDTO.animalSpecies}']").prop('checked', true);
+		$("input:radio[name='state']:radio[value='${lostDTO.state}']").prop('checked', true);
 	}
 	
-</script>
+	var getParameters = function (paramName) { 
+		// 리턴값을 위한 변수 선언 
+		var returnValue; 
+		// 현재 URL 가져오기
+		var url = location.href; 
+		// get 파라미터 값을 가져올 수 있는 ? 를 기점으로 slice 한 후 split 으로 나눔 
+		var parameters = (url.slice(url.indexOf('?') + 1, url.length)).split('&'); 
+		// 나누어진 값의 비교를 통해 paramName 으로 요청된 데이터의 값만 return 
+		for (var i = 0; i < parameters.length; i++) { 
+			var varName = parameters[i].split('=')[0]; 
+			if (varName.toUpperCase() == paramName.toUpperCase()) 
+			{ returnValue = parameters[i].split('=')[1]; 
+			return decodeURIComponent(returnValue); 
+			} }
+		};
+		
+		$("#state").val(getParameters('state'));
+
+		
+			$(".state").each(function(){
+				var val = $(this).attr("title");
+				if(val == "목격"){
+					$(this).css('background-color','#ffc107');
+				}else if(val == "보호"){
+					$(this).css('background-color','#28a745');
+				}else if(val == "실종"){
+					$(this).css('background-color','#fd7e14');
+				}else if(val == "완료"){
+					$(this).css('background-color','#007bff');
+				}
+			});
+		
+			
+			</script>
 
 
 </html>

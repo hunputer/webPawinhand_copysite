@@ -1,6 +1,8 @@
 package com.ph4.s1.lost;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -117,12 +119,18 @@ public class LostController {
 	@GetMapping("lostList")
 	public ModelAndView lostList(LostDTO lostDTO, String sDate, String eDate) {
 		ModelAndView mv = new ModelAndView();
+
+		if(lostDTO.getState() ==null) {
+			lostDTO.setState("");
+		}
 		if(lostDTO.getLostProvince() == null) {
 			lostDTO.setLostProvince("");
 		}
 		if(lostDTO.getAnimalSpecies() == null) {
 			lostDTO.setAnimalSpecies("");
 		}
+		
+		
 		if(sDate != null) {
 			if(!sDate.equals("")) {
 				System.out.println(1111);

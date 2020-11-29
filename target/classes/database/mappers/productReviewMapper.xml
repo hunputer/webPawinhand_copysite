@@ -73,10 +73,18 @@
 		select count(review_num) from productreview
 	</select>
 	
-	<select id="getReviewOne_admin" parameterType="ProductReviewDTO" resultType="ProductReviewDTO" resultMap="getProductList">
-		select PR.*, P.name, P.color from 
+	<select id="getReviewOne_admin" parameterType="ProductReviewOneDTO" resultType="ProductReviewOneDTO">
+       select PR.*, P.name, P.color, M.points, RF.filename
+        from 
         productreview PR left join product P
         on PR.product_num = P.product_num
+        
+        left join member M
+        on PR.id = M.id
+        
+        left join reviewfile RF
+        on PR.review_num = RF.review_num
+        
         where PR.review_num = #{review_num}
 	</select>
 </mapper>

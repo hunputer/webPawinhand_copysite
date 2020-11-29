@@ -20,7 +20,7 @@
 				<div class="join-item">
 					<h2>유기동물 입양하고<br>후원해주세요 .</h2>
 					<img alt="join-image1" src="${pageContext.request.contextPath}/resources/img/common/join_1.jpg">
-					<a href="${pageContext.request.contextPath}/member/memberJoinForm?memberType=0">
+					<a href="${pageContext.request.contextPath}/member/memberJoinForm">
 						<button class="join-button b1">개인회원가입</button>
 					</a>
 				</div>
@@ -30,7 +30,7 @@
 				<div class="join-item">
 					<h2>보호소 동물을 등록하고 <br>관리해주세요.</h2>
 					<img alt="join-image1" src="${pageContext.request.contextPath}/resources/img/common/join_2.jpg">
-					<a href="${pageContext.request.contextPath}/member/memberJoinForm?memberType=1">
+					<a href="${pageContext.request.contextPath}/member/memberJoinForm_shelter">
 						<button class="join-button b2">보호소 회원가입</button>
 					</a>
 				</div>

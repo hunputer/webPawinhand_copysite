@@ -15,8 +15,10 @@ import com.ph4.s1.store.product.ProductDTO;
 import com.ph4.s1.store.product.ProductPager;
 import com.ph4.s1.store.product.ProductService;
 import com.ph4.s1.store.product.productQna.ProductQnaDTO;
+import com.ph4.s1.store.product.productQna.ProductQnaOneDTO;
 import com.ph4.s1.store.product.productQna.ProductQnaService;
 import com.ph4.s1.store.product.review.ProductReviewDTO;
+import com.ph4.s1.store.product.review.ProductReviewOneDTO;
 import com.ph4.s1.store.product.review.ProductReviewService;
 import com.ph4.s1.util.Pager;
 
@@ -106,6 +108,16 @@ public class AdminController {
 }
 	
 	
+	@GetMapping("admin_memberSelect_open")
+	public ModelAndView getOneOpen(MemberDTO memberDTO) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		memberDTO = memberService.getOne(memberDTO);
+		
+		mv.addObject("dto", memberDTO);
+		mv.setViewName("admin/admin_memberSelect_open");
+		return mv;
+	
+}
 	
 	@GetMapping("admin_memberUpdate")
 	public ModelAndView setMemberUpdate_admin() throws Exception{
@@ -131,6 +143,22 @@ public class AdminController {
 		return mv;
 	}
 	
+	@PostMapping("admin_memberUpdate_open")
+	public ModelAndView setMemberUpdateOpen_admin(MemberDTO memberDTO) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		
+		int result = memberService.setMemberUpdate_admin(memberDTO);
+		String msg = "수정 실패";
+		
+		if(result>0) {
+			msg = "수정 완료";
+			mv.addObject("msg", msg);
+			mv.setViewName("admin/admin_Close");
+		}
+		
+		return mv;
+	}
+	
 	
 //--------------------------------------------------------------------------------------------	
 	
@@ -146,11 +174,11 @@ public class AdminController {
 	
 	
 	@GetMapping("admin_qnaSelect")
-	public ModelAndView getOne_admin(ProductQnaDTO productQnaDTO) throws Exception{
+	public ModelAndView getOne_admin(ProductQnaOneDTO productQnaOneDTO) throws Exception{
 		ModelAndView mv = new ModelAndView();
-		productQnaDTO = productQnaService.getOne_admin(productQnaDTO);
+		productQnaOneDTO = productQnaService.getOne_admin(productQnaOneDTO);
 		
-		mv.addObject("dto", productQnaDTO);
+		mv.addObject("dto", productQnaOneDTO);
 		mv.setViewName("admin/admin_qnaSelect");
 		
 		return mv;
@@ -167,6 +195,18 @@ public class AdminController {
 		mv.addObject("list", ar);
 		mv.addObject("pager", pager);
 		mv.setViewName("admin/admin_reviewList");
+		return mv;
+	}
+	
+	
+	@GetMapping("admin_reviewSelect")
+	public ModelAndView getReviewOne_admin(ProductReviewOneDTO productReviewOneDTO) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		productReviewOneDTO = productReviewService.getReviewOne_admin(productReviewOneDTO);
+		
+		mv.addObject("dto", productReviewOneDTO);
+		mv.setViewName("admin/admin_reviewSelect");
+		
 		return mv;
 	}
 	

@@ -27,7 +27,6 @@
       <div class="col-12">
       <h1 class="join-title">개인 회원가입</h1>
       <form action="./memberJoin" method="post" id="join-form">
-      <input type="hidden" name="memberType" value="${dto.memberType}">
       <div class="p1">
          <div class="panel-group" id="accordion">
           <div class="panel panel-first">
@@ -131,6 +130,7 @@
           </div>
         </div>
    <div class="p2">     
+   		<input type="hidden" value="0" id="member_type" name="member_type">
    		<div class="resultBox" id="idResult"></div>
       <div class="form-group">
          <label for="lname">아이디</label>
@@ -366,7 +366,7 @@
 	  // document.getElementById("address").value = document.getElementById("sample6_address").value + document.getElementById("sample6_detailAddress").value + document.getElementById("sample6_extraAddress").value;
 	   console.log(ch2);
 	   if(ch2.checked && ch3.checked){
-	   		alert("OK");
+		   console.log("ok");
 	   }else {
 	  		alert("필수 항목을 체크하세요");
 	   }
@@ -416,7 +416,7 @@
 	   
 		$("#member-jb2").click(function() {
 		 	if (confirm("이 페이지에서 나가시겠습니까?") == true){    //확인
-		     	location.href="${pageContext.request.contextPath}/";
+		     	location.href="${pageContext.request.contextPath}/member/memberJoin";
 
 		 	}else{   //취소
 		     	return false;

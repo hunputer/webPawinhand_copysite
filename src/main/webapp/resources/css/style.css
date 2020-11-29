@@ -24,6 +24,20 @@ a {
 }
 
 
+.okbtn{
+   border: 1.5px solid #FDC033;
+   color: #FDC033;
+   font-size: 0.88em;
+   font-weight: 500;
+   
+}
+
+.nobtn{
+    border: 1px solid #d9d9d9;
+    margin-left: 3px;
+    font-size: 0.9em;
+}
+
 /***** banner *****/
 .banner {
 	position: absolute;
@@ -125,6 +139,7 @@ nav {
 	line-height: 1.2;
 	text-align: center;
 }
+
 
 /***** memberJoin *****/
 .join {
@@ -282,7 +297,7 @@ nav {
 
 .goods {
 	width: 250px;
-	height: 430px;
+	height: 330px;
 }
 
 .goods a {
@@ -300,25 +315,36 @@ nav {
 }
 
 .goods-name {
-	margin-top: 10px;
+	margin-top: 5px;
 	text-align: center;
 	font-size: 0.9em;
-	font-weight: 500;
+	font-weight: 400;
 	width: 250px;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
 }
 
-.goods-name:hover {
+.goods-info dt {
+	font-weight: 400;
+	font-size: 0.9em;
+	text-align: left;
+}
+
+
+.goods-name .name:hover {
 	color: #FDC033;
 }
 
+
+
 .goods-info dd {
 	width: 250px;
-	height: 50px;
+	height: 20px;
 	font-size: 0.7em;
 	color: #B4B4B4;
+	padding: 0;
+	text-align: left;
 }
 
 /***** goodsSelect *****/
@@ -328,15 +354,13 @@ nav {
 	border: 1px #F0F0F0 solid;
 }
 
-
 .goods-detail2 {
 	border-top: 2px #000 solid;
-	border-bottom: 2px #000 solid;
 }
 
 .goods-sname {
 	font-size: 1.3em;
-	padding: 30px 0;
+	padding: 15px 0;
 }
 
 .goods-items th {
@@ -344,32 +368,35 @@ nav {
 }
 
 .goods-items th,td{
-	font-size: 1.1em;
+	font-size: 1.0em;
 	letter-spacing: 0.02em;	
-	color: #B4B4B4;
+	color: #000;
 	font-weight: 300;
 }
 
 .goods-detail3{
 	display: flex;
 	justify-content: space-between;
+	border-bottom: 2px #000 solid;
 }
 
 .goods-detail3 button{
 	padding: 10px 90px;
 	margin: 5px 0;
-	border-style: none;
+	background-color: #fff;
 }
 
-.cart-btn{
-	background-color: #FDC033;
-	color: #fff;
+.amount {
+	display: flex;
+	justify-content:space-evenly;
+	height: 30px;
 }
 
-.pay-btn{
-	background-color: #FDAF33;
-	color: #fff;
+.amount > .combo-box button{
+	width: 25px;
+ 	height: 25px;
 }
+
 
 /***** mypage nav *****/
 .myPage h1 {
@@ -611,6 +638,24 @@ nav {
 	padding: 10px 25px;
 }
 
+.order_btn{
+   border: 1.5px solid #FDC033;
+   color: #FDC033;
+   font-size: 0.88em;
+   font-weight: 500;
+   float: right;
+   margin: 15px 0; 
+}
+
+.order_btn::after {
+   content: "";
+   display: block;
+   clear: right;
+}
+
+.ck {
+	visibility:hidden;
+}
 
 /***** board List *****/
  .c1 {
@@ -796,7 +841,6 @@ nav {
 .replyContents {
 	display: inline-block;
 	padding: 5px 0;
-	border-bottom:  1px #d3d3d3 solid;
 }
 
 .reply-title {
@@ -882,7 +926,7 @@ nav {
 	width: 10%;
 }
 
-.combo-box #minus-button {
+.combo-box #minus-button{
   border-radius: 6px 0 0 6px;
   background-image: url("../img/common/icon-minus.svg");
 }
@@ -904,6 +948,11 @@ nav {
   text-align: center;
 }
 
+.combo-box input {
+	width: 25px;
+  	height: 25px;
+}
+
 .combo-box button {
   border: 1px solid #e4e4e4;
   background-repeat: no-repeat;
@@ -915,8 +964,187 @@ nav {
   transition: opacity 250ms ease-in;
 }
 
-#totalPrice {
+.totalPrice {
 	border: none;
 	width: 60%;
 	text-align: right;
 }
+
+/***** lostList *****/
+.lost-list {
+	padding: 0;
+	display:flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+}
+
+.lostList{
+	width : 270px;
+	height : 360px;
+	margin: 0 15px 30px;
+	
+	border: 1px #e4e4e4 solid;
+	cursor: pointer;
+}
+
+.state-link {
+	padding-left: 10px;
+}
+
+.state-link li{
+	margin-bottom: 10px;
+}
+
+
+.lost-header h1 {
+    font-size: 1.3em;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.lost-link {
+    text-decoration: none;
+	font-size: 1.1em;
+	font-weight: 300;
+	letter-spacing: 0.01em;
+	color: #0d0d0d;
+	margin-bottom: 10px;
+}
+
+.lost-link:hover {
+	color: #FDC033;
+} 
+
+.lostImage{
+	position: absolute;
+	width : 270px;
+	height : 270px;
+}
+
+.lost-detail{
+	display:block;
+	width: 250px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	position: relative;
+	bottom: 15px;
+	left: 10px;
+}
+
+.detailSpecies > h3,
+.shortInfo > h3 {
+	font-size: 0.9em;
+	margin: 0 10px 5px 0;
+	
+}
+
+.shortInfo > h3 {
+	font-weight: 400;
+}
+
+.lostMain {
+	display: flex;
+	
+}
+
+.lostSub > div > h3{
+	display : inline-block;
+	font-size: 0.8em;
+	font-weight: 300;
+}
+
+.dropdowns {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 30px;
+}
+
+.drops {
+	margin: 0 auto;
+	border: 1px solid #FDC033;
+}
+
+.dropContents{
+	display: inline-block;
+	width: 800px;
+	height : 24px;
+}
+
+.dropdownmenu{
+	width: 850px;
+}
+
+.dropSearch{
+	display: inline-block;
+	font-size: 0.9em;
+	letter-spacing: 0.02em;
+	color: #F98C44;
+
+}
+
+.selectForm{
+	margin-left: 10px;
+}
+
+.lostProvince > input,.radio2 > input,
+.animalSpecies > input, .lostdate > input{
+	margin: 3px;
+}
+
+.lostProvinceTitle, .animalSpeciesTitle, .dates{
+	display: inline-block;
+	font-size: 1em;
+	margin-right: 5px;
+}
+
+.lostdate, .lostProvince, .animalSpecies{
+	display: inline-block;
+	margin-top : 10px;
+	font-size: 0.9em;
+	font-weight: 400;
+	
+}
+
+.state{
+	position: relative;
+	margin-right: 10px;
+	width : 270px;
+	height: 25px;
+	bottom: 25px;
+	text-align: center;
+	color: white;
+	font-size: 1em;
+	opacity: 0.7;
+}
+
+
+.lost-location {
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+.writeIcon{
+	position: fixed;
+	right: 150px;
+	bottom: 20px;
+	cursor: pointer;
+}
+
+.writeIconfocus {
+       border-color: #28a745;
+       box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+   }
+   
+ /***** lost Select *****/
+ .ls-item {
+ 	display: flex;
+ 	margin-bottom: 10px;
+ }  
+ 
+  .ls-item span {
+  	margin-left: 15px;
+}
+ 
+ 

@@ -7,24 +7,31 @@
 	<div class="row">
 		<div class="col-12">
 			<ul class="sub-nav">
-				<c:choose>
-			      	<c:when test="${not empty member}">
-			      		 <li class="sub-item">
-			      		 	<a class="sub-link" href="${pageContext.request.contextPath}/member/memberPage">마이페이지</a>
-			      		 </li>
-			     		 <li class="sub-item">
-			     		 	<a class="sub-link" href="${pageContext.request.contextPath}/member/memberLogout">로그아웃</a>
-			     		 </li>
-			      	</c:when>
-			      	<c:otherwise>
-					      <li class="sub-item">
-					      	<a class="sub-link" href="${pageContext.request.contextPath}/member/memberJoin">회원가입</a>
-					      </li>
-					      <li class="sub-item">
-					      	<a class="sub-link" href="${pageContext.request.contextPath}/member/memberLogin">로그인</a>
-					      </li>
-			      	</c:otherwise>
-    		  </c:choose>
+            <c:choose>
+                  <c:when test="${not empty member}">
+                      <li class="sub-item">
+                         <a class="sub-link" href="${pageContext.request.contextPath}/member/memberPage">마이페이지</a>
+                      </li>
+                     <li class="sub-item">
+                        <a class="sub-link" href="${pageContext.request.contextPath}/member/memberLogout">로그아웃</a>
+                     </li>
+                     	<c:if test="${member.id eq 'admin'}">
+                     	 	<li class="sub-item">
+                         		<a class="sub-link" href="${pageContext.request.contextPath}/admin/adminPage">
+                         		<img alt="" src="${pageContext.request.contextPath}/resources/img/common/setting.png" width="23px" height="23px">
+                         		</a>
+                      		</li>
+                     	</c:if>
+                  </c:when>
+                  <c:otherwise>
+                     <li class="sub-item">
+                        <a class="sub-link" href="${pageContext.request.contextPath}/member/memberJoin">회원가입</a>
+                     </li>
+                     <li class="sub-item">
+                        <a class="sub-link" href="${pageContext.request.contextPath}/member/memberLogin">로그인</a>
+                     </li>
+                  </c:otherwise>
+            </c:choose>
 			</ul>
 		</div>
 	

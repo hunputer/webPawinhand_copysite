@@ -5,32 +5,34 @@
 
 <mapper namespace="com.ph4.s1.board.member.MemberDAO">
 
-   <select id="getMemberLogin" parameterType="MemberDTO" resultType="MemberDTO">
-        Select * from member where id = #{id} and pw = #{pw}
-   </select>
-   
-   <select id="getOne" parameterType="MemberDTO" resultType="MemberDTO">
-      select * from member where id=#{id}
-   </select>
-   
-   <select id="getMemberIdCheck" parameterType="MemberDTO" resultType="MemberDTO">
-      select id from member where id=#{id}
-   </select>
+	<select id="getMemberLogin" parameterType="MemberDTO" resultType="MemberDTO">
+  		Select * from member where id = #{id} and pw = #{pw}
+	</select>
+	
+	<select id="getOne" parameterType="MemberDTO" resultType="MemberDTO">
+		select * from member where id=#{id}
+	</select>
+	
+	<select id="getMemberIdCheck" parameterType="MemberDTO" resultType="MemberDTO">
+		select id from member where id=#{id}
+	</select>
 
-   <insert id="setMemberJoin" parameterType="MemberDTO">
-         insert into member values(#{id}, #{pw}, #{name}, #{email}, #{phone}, 
-         #{zipCode}, #{address}, #{detailAddress}, #{extraAddress}, #{memberType})
-   </insert>
-   
-   <delete id="setMemberDelete" parameterType="MemberDTO">
-      delete member where id=#{id}
-   </delete>
-   
-   <update id="setMemberUpdate" parameterType="MemberDTO">
-      update member set pw=#{pw}, name=#{name}, email=#{email}, phone=#{phone}, 
-      address=#{address}, detailAddress=#{detailAddress}, extraAddress=#{extraAddress}, zipcode=#{zipCode}
-      where id=#{id}
-   </update>
+	<insert id="setMemberJoin" parameterType="MemberDTO">
+      	insert into member values(#{id}, #{pw}, #{name}, #{email}, #{phone}, 0,
+      	#{zipCode}, #{address}, #{detailAddress}, #{extraAddress}, #{member_type})
+	</insert>
+	
+	<delete id="setMemberDelete" parameterType="MemberDTO">
+		delete member where id=#{id}
+	</delete>
+	
+	<update id="setMemberUpdate" parameterType="MemberDTO">
+		update member set pw=#{pw}, name=#{name}, email=#{email}, phone=#{phone}, 
+		address=#{address}, detailAddress=#{detailAddress}, extraAddress=#{extraAddress}, 
+		zipcode=#{zipCode}
+		where id=#{id}
+	</update>
+	
 	
 	
 	
@@ -54,7 +56,7 @@
 		
 	<select id="getList" parameterType="Pager" resultType="MemberDTO">
 		select * from 
-		(select rownum R, M.* from 
+		(select rownum R, M.* from
 		(select * from (select * from member where not id='admin' order by name asc) where 
 		<choose>
 			<when test="kind == 'id'">
