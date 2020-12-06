@@ -22,21 +22,12 @@
 					<p>사업자등록번호 : 000-00-00000</p><br>
 					<p class="end">COPYRIGHT (C) 2020 PAWINHAND. ALL RIGHTS RESERVED</p>
 				</div>
-				
 			</div>
 			
-			<div id="ft_site">
-				<select>
-					<option>유한 킴벌리</option>
-					<option>삐콤씨</option>
-					<option>유한클로락스</option>
-					<option>주식회사 유한화학</option>
-				</select>
-				
 				<div id="ft_logo">
-				<img src="https://www.yuhan.co.kr/common/images/icon/yuhan_mark.png" border="0" alt="">
+					<img src="${pageContext.request.contextPath}/resources/img/common/logo.png" width="50px" alt="logo image" >
+					<p>PAWINHAND</p>
 				</div>
 			</div>
-		
-		</div>
+
 	</footer>

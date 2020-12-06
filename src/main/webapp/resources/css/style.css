@@ -879,6 +879,12 @@ nav {
 #f {
 	display: none;
 }
+.bw-title{
+	text-align: center;
+	font-weight: 600;
+	margin-bottom: 10px;
+}
+
 .board-write{
 	display: flex;
 	justify-content: center;
@@ -886,8 +892,9 @@ nav {
 }
 
 .bw-item{
+	width: 90vh;
 	display: flex;
-	justify-content: space-between;
+	justify-content: center;
 	margin-bottom: 10px;
 }
 
@@ -896,7 +903,7 @@ nav {
 }
 
 .bw-item input{
-	width: 80vh;
+	width:500px;
 }	
 /***** cartList *****/
 .cart-table { 
@@ -1146,5 +1153,79 @@ nav {
   .ls-item span {
   	margin-left: 15px;
 }
+ 
+
+ /***** footer *****/
+footer {
+	width: 100%;
+    background: #F6F6F6;
+    height: 130px;
+    margin-top: 20px;
+}
+
+#footer_wrap{
+	width: 960px;
+	height: 74px;
+	padding: 18px 0 37px 0;
+	margin: 0 auto;
+}
+	
+#ft_logo {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+#ft_logo p{
+	color: #FDC033;
+	font-weight: 600;
+	font-size: 1.3em;
+	margin: 0;
+}	
+	
+#ft_menu {
+	width: 755px;
+	height: 73px;
+	float: left;
+}
+
+#ft_util {
+	width: 755px;
+	height: 21px;
+}
+
+#ft_util a {
+	text-decoration: none;
+	color: #4C4C4C;
+}
+
+#ft_util p{
+	float: left;
+    background: url(https://www.yuhan.co.kr/common/images/icon/foot_icon.gif) no-repeat right 7px;
+	padding-right: 8px;
+    margin-right: 7px;
+    letter-spacing: -0.4px;
+    font-size: 0.8rem;
+    
+}
+
+
+#ft_util2 {
+	width: 755px;
+	height: 21px;
+	margin-top: 15px;
+}
+
+
+#ft_util2 p{
+	float: left;
+    background: url(https://www.yuhan.co.kr/common/images/icon/foot_icon.gif) no-repeat right 7px;
+	padding-right: 8px;
+    margin-right: 7px;
+    color: #4C4C4C;
+    font-size: 0.75rem;
+}
+
+
  
  
